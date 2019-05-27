@@ -40,7 +40,7 @@ export default class App extends Component {
       <View style={styles.container}>
         <Text style={{ fontSize: 18, color: 'red' }}>{this.state.Imagedata}</Text>
 
-                <Button
+        <Button
           onPress={() =>this.UpfilePicture(this.state.Imagedata)}
           title="Press Me"
         />
