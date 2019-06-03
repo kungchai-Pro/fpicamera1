@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, Text, TouchableOpacity, View, Image ,Button,Alert} from 'react-native';
+import { AppRegistry, StyleSheet, Text, TouchableOpacity, View, Image, Button, Alert } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { thisExpression } from '@babel/types';
 
@@ -14,10 +14,13 @@ export default class App extends Component {
 
 
   UpfilePicture(PicturePath) {
-    var Url = 'http://192.168.0.19:8080/uploadFile';
+    var d = new Date();
+    var Url = 'http://192.168.0.31:8080/uploadFile';
     let body = new FormData();
-    body.append('file', { uri: PicturePath, name: 'photo.png', 
-    filename: 'imageName.png', type: 'image/png' });
+    body.append('file', {
+      uri: PicturePath, name:d.getTime() + '.jpg',
+      type: 'image/png'
+    });
     body.append('Content-Type', 'image/png');
     fetch(Url, {
       method: 'POST', headers: {
@@ -34,18 +37,18 @@ export default class App extends Component {
         console.log(e)
       })
   }
-   //     <Text onPress={this.UpfilePicture(this.state.Imagedata)}  style={{fontSize:14,color:'red'}}>บันทึก</Text>
+  //     <Text onPress={this.UpfilePicture(this.state.Imagedata)}  style={{fontSize:14,color:'red'}}>บันทึก</Text>
   render() {
     return (
       <View style={styles.container}>
         <Text style={{ fontSize: 18, color: 'red' }}>{this.state.Imagedata}</Text>
 
         <Button
-          onPress={() =>this.UpfilePicture(this.state.Imagedata)}
+          onPress={() => this.UpfilePicture(this.state.Imagedata)}
           title="Press Me"
         />
         <Image source={{ uri: this.state.Imagedata }} style={{ height: 200, width: null, flex: 1 }} />
-        
+
         <RNCamera
           ref={ref => {
             this.camera = ref;
