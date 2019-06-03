@@ -18,7 +18,7 @@ export default class App extends Component {
     var Url = 'http://192.168.0.31:8080/uploadFile';
     let body = new FormData();
     body.append('file', {
-      uri: PicturePath, name:d.getTime() + '.jpg',
+      uri: PicturePath, name:d.getTime() +'.jpg',
       type: 'image/png'
     });
     body.append('Content-Type', 'image/png');
