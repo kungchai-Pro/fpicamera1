@@ -6,7 +6,7 @@ export default class HomeScreen extends Component{
         return(
             <View>
                 <Text>
-                       ทดสอบ load file  ใหนการ ใช้ Github   002
+                       ทดสอบ load file  ใหนการ ใช้ Github   003
                 </Text>
             </View>
         )
