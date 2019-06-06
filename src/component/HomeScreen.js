@@ -6,7 +6,7 @@ export default class HomeScreen extends Component{
         return(
             <View>
                 <Text>
-                        
+                        ทดสอบการ  uploade  file
                 </Text>
             </View>
         )
