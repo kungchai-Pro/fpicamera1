@@ -1,13 +1,44 @@
 
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, TouchableOpacity, View, Image ,Button,Alert} from 'react-native';
-import HomeSreen from './src/HomeScreen'
+import { createStackNavigator,createAppContainer } from 'react-navigation';
+import HomeScreen from './src/HomeScreen';
+import  CamerasScreen from './src/component/Cameras';
+import potoSave from'./src/component/potoSave';
+ class App extends Component {
 
-export default class App extends Component {
   render(){
     return(
-      <HomeSreen/>
+      <View>
+        <Text> hello word </Text>
+        </View>
     )
   }
 }
 
+
+const AppStack = createStackNavigator(
+  {
+      Home: {
+          screen: HomeScreen
+        },  
+        Cameras: {
+          screen: CamerasScreen
+        },
+        Poto: {
+          screen: potoSave
+        }
+  },
+  {
+    initialRouteName: "Home"
+  }
+);
+
+// const MainNavigator = createStackNavigator({
+//   Home: {screen: HomeScreen},
+//   Profile: {screen: ProfileScreen},
+// });
+
+const Apps = createAppContainer(AppStack);
+ 
+export default Apps;

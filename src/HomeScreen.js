@@ -6,6 +6,28 @@ import {
 } from 'native-base';
 
 export default class HomeScreen extends React.Component {
+    static navigationOptions = {
+        header: null,
+      };
+        
+    cameraconfirm(data){
+        const {navigate} = this.props.navigation;
+
+            switch(data){
+                case '1':
+                   navigate('Cameras',{dataType:'1'});
+                   break;
+                case '2':
+                        navigate('Cameras',{dataType:'2'});
+                        break;
+                case '3':
+                        navigate('Cameras',{dataType:'3'});
+                        break;
+                 case '4':
+                        navigate('Cameras',{dataType:'4'});  
+                        break;
+            }
+    }
 
     render() {
         return (
@@ -51,31 +73,31 @@ export default class HomeScreen extends React.Component {
                     <View style={{ flexDirection: 'row', backgroundColor: '#e5ffff', flex: 1, margin: 10 }}>
                         <Body style={{ margin: 10 }}>
                             <Text>ถ่ายด้านหน้า</Text>
-                            <Image
-                                source={require('./image/samsungcam.png')}
-                            />
+                            <TouchableOpacity onPress={()=>this.cameraconfirm('1')}>
+                            <Image source={require('./image/iconcamera.png')}/>
+                            </TouchableOpacity>
                         </Body >
 
                         <Body style={{ margin: 10 }}>
                             <Text>ถ่ายด้านหลัง</Text>
-                            <Image
-                                source={require('./image/samsungcam.png')}
-                            />
+                            <TouchableOpacity onPress={()=>this.cameraconfirm('2')}>
+                            <Image source={require('./image/iconcamera.png')}/>
+                            </TouchableOpacity>
                         </Body>
                     </View>
 
                     <View style={{ flexDirection: 'row', backgroundColor: '#e5ffff', flex: 1, margin: 10 }}>
                         <Body style={{ margin: 10 }}>
                             <Text>ถ่ายด้านซ้าย</Text>
-                            <Image
-                                source={require('./image/samsungcam.png')}
-                            />
+                            <TouchableOpacity onPress={()=>this.cameraconfirm('3')}>
+                            <Image source={require('./image/iconcamera.png')}/>
+                            </TouchableOpacity>
                         </Body>
                         <Body style={{ margin: 10 }}>
                             <Text>ถ่ายด้ายขวา</Text>
-                            <Image
-                                source={require('./image/samsungcam.png')}
-                            />
+                            <TouchableOpacity onPress={()=>this.cameraconfirm('4')}>
+                            <Image source={require('./image/iconcamera.png')}/>
+                            </TouchableOpacity>
                         </Body>
                     </View>
                     <Button full success>
