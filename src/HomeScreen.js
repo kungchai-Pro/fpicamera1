@@ -63,7 +63,6 @@ export default class HomeScreen extends React.Component {
                             <View style={{ marginRight: 5 ,flexDirection: 'row'}}>
                                 <Text style={{ margin: 5 }}>เข้า</Text>
                                 <Radio color={"#f0ad4e"} selectedColor={"#5cb85c"} selected={false} />
-
                                 <Text style={{ margin: 5 }}>ออก</Text>
                                 <Radio color={"#f0ad4e"} selectedColor={"#5cb85c"} selected={false} />
                             </View>

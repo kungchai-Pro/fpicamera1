@@ -1,7 +1,8 @@
 
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, Text, TouchableOpacity, View, Image, Button, Alert } from 'react-native';
+import { AppRegistry, StyleSheet, Text, TouchableOpacity, View, Image, Alert } from 'react-native';
 import { RNCamera } from 'react-native-camera';
+import { Button, Spinner } from 'native-base';
 //import { thisExpression } from '@babel/types';
 
 export default class Cameras extends Component {
@@ -50,7 +51,6 @@ export default class Cameras extends Component {
           title="Press Me"
         /> */}
                 {/* <Image source={{ uri: this.state.Imagedata }} style={{ height: 200, width: null, flex: 1 }} /> */}
-
                 <RNCamera
                     ref={ref => {
                         this.camera = ref;
@@ -58,6 +58,8 @@ export default class Cameras extends Component {
                     style={styles.preview}
                     type={RNCamera.Constants.Type.back}
                     flashMode={RNCamera.Constants.FlashMode.on}
+                    mirrorImage={false}
+                    cropToPreview={false}
                     androidCameraPermissionOptions={{
                         title: 'Permission to use camera',
                         message: 'We need your permission to use your camera',
@@ -76,29 +78,37 @@ export default class Cameras extends Component {
                 />
                 <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>
                     <TouchableOpacity onPress={this.takePicture.bind(this)} style={styles.capture}>
-                        <Text style={{ fontSize: 14 }}> SNAP </Text>
+                        <Text style={{ fontSize: 14 }}> ถ่าย </Text>
                     </TouchableOpacity>
                 </View>
             </View>
         );
     }
+
+
     takePicture = async function () {
-        const {navigate} = this.props.navigation;
+        const { navigate } = this.props.navigation;
         const data_params = this.props.navigation.state.params;
         if (this.camera) {
-            const options = { quality: 0.5, base64: true };
+            const options = {
+                quality: 0.5,
+                base64: true,
+                fixOrientation: true
+            };
+            
             const data = await this.camera.takePictureAsync(options);
             console.log(data.uri);
             this.setState({
                 Imagedata: data.uri
             }, function () {
-               // this.props.navigation.navigate('Poto')
-                 navigate('Poto',{ImagePoto:this.state.Imagedata,typeimage:data_params.dataType})  
-               //alert(''+this.state.Imagedata);
+                // this.props.navigation.navigate('Poto')
+
+                navigate('Poto', { ImagePoto: this.state.Imagedata, typeimage: data_params.dataType })
+                //alert(''+this.state.Imagedata);
             })
         }
+
     }
-    
 }
 
 const styles = StyleSheet.create({

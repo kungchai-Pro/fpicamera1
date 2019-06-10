@@ -5,6 +5,7 @@ import { createStackNavigator,createAppContainer } from 'react-navigation';
 import HomeScreen from './src/HomeScreen';
 import  CamerasScreen from './src/component/Cameras';
 import potoSave from'./src/component/potoSave';
+import Loadingpoto from './src/component/Loadingpoto'
  class App extends Component {
 
   render(){
@@ -27,6 +28,9 @@ const AppStack = createStackNavigator(
         },
         Poto: {
           screen: potoSave
+        },
+        LoadingPt: {
+          screen: Loadingpoto
         }
   },
   {
