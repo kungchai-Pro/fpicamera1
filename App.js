@@ -6,6 +6,8 @@ import HomeScreen from './src/HomeScreen';
 import  CamerasScreen from './src/component/Cameras';
 import potoSave from'./src/component/potoSave';
 import Loadingpoto from './src/component/Loadingpoto'
+import TestArray from './src/TestArray';
+
  class App extends Component {
 
   render(){
@@ -31,10 +33,13 @@ const AppStack = createStackNavigator(
         },
         LoadingPt: {
           screen: Loadingpoto
+        },
+        Test: {
+          screen: TestArray
         }
   },
   {
-    initialRouteName: "Home"
+    initialRouteName: "Test"
   }
 );
 
