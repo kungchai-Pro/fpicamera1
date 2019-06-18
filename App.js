@@ -7,6 +7,7 @@ import  CamerasScreen from './src/component/Cameras';
 import potoSave from'./src/component/potoSave';
 import Loadingpoto from './src/component/Loadingpoto'
 import TestArray from './src/TestArray';
+import Potocapscreen from './src/PotocapScreen';
 
  class App extends Component {
 
@@ -34,12 +35,15 @@ const AppStack = createStackNavigator(
         LoadingPt: {
           screen: Loadingpoto
         },
+        Potocap: {
+          screen: Potocapscreen
+        },
         Test: {
           screen: TestArray
         }
   },
   {
-    initialRouteName: "Test"
+    initialRouteName: "Home"
   }
 );
 

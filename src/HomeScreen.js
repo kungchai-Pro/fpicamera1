@@ -1,107 +1,92 @@
 import React, { Component } from 'react';
-import { AppRegistry, StyleSheet, Text, TouchableOpacity, View, Image, Alert } from 'react-native';
+import {
+    AppRegistry, StyleSheet, Text, TouchableOpacity,
+    View, Image, Alert, Async, TextInput
+} from 'react-native';
 import {
     Container, Header, Left, Body, Right, Button, Icon, Title,
     CardItem, Card, Content, Input, Item, Radio, Thumbnail
 } from 'native-base';
+import AsyncStorage from '@react-native-community/async-storage';
 
 export default class HomeScreen extends React.Component {
     static navigationOptions = {
         header: null,
-      };
-        
-    cameraconfirm(data){
-        const {navigate} = this.props.navigation;
+    };
 
-            switch(data){
-                case '1':
-                   navigate('Cameras',{dataType:'1'});
-                   break;
-                case '2':
-                        navigate('Cameras',{dataType:'2'});
-                        break;
-                case '3':
-                        navigate('Cameras',{dataType:'3'});
-                        break;
-                 case '4':
-                        navigate('Cameras',{dataType:'4'});  
-                        break;
-            }
+    constructor(props) {
+        super(props)
+        this.state = {
+            Textcontainer: null,
+            TextSeal: null,
+            Textbooking: null
+        }
+    }
+    functionDataset() {
+  // for set  AsyncStorage
+        AsyncStorage.multiSet([
+            ["Container", this.state.Textcontainer,],
+            ["seal", this.state.TextSeal],
+            ["booking", this.state.Textbooking]
+        ])
+       
+        const { navigate } = this.props.navigation;
+        navigate('Potocap')
+
     }
 
+
     render() {
+
         return (
-            <Container style={{backgroundColor:'#e5ffff'}}>
-                <Header style={{ backgroundColor: '#e8eaf6' }}>
+            <Container>
+                <Header style={{ backgroundColor: '#00796b' }}>
                     <Body>
-                        <Title style={{ color: '#0288d1' }}>ตู้เข้า - ตู้ออก</Title>
+                        <Title style={{ color: '#e3f2fd' }}>ตู้เข้า - ตู้ออก</Title>
                     </Body>
                     <Right>
                         <Button transparent>
-                            <Title style={{ color: '#0288d1' }}>FPI In</Title>
+                            <Title style={{ color: '#e3f2fd' }}>FPI In</Title>
                         </Button>
                     </Right>
                 </Header>
                 <Content>
                     <Card>
                         <CardItem header>
-                            <Text style={{ fontSize: 14, color: '#00897b' }}>Fortune application</Text>
+                            <Text style={{ fontSize: 14, color: '#1565c0', margin: 1 }}>วัน/เวลา เข้า-ออก  2019-06-01</Text>
                         </CardItem>
                         <CardItem>
-                            <Right style={{ flex: 1 }}>
+                            <Body>
                                 <Item rounded>
-                                    <Input style={{ fontSize: 14 }} placeholder='หมายเลขตู้' />
+                                    <Input style={{ fontSize: 14 }}
+                                        onChangeText={(Text) => this.setState({ Textcontainer: Text })}
+                                        value={this.state.text}
+                                        placeholder='หมายเลข Container ' />
                                 </Item>
                                 <Item style={{ backgroundColor: '#e0f7fa', margin: 1 }}>
-                                    <Text style={{ fontSize: 14, color: '#1565c0', margin: 1 }}>วัน/เวลา เข้า-ออก  2019-06-01</Text>
                                 </Item>
-                            </Right>
+
+                                <Item rounded>
+                                    <Input style={{ fontSize: 14 }}
+                                        onChangeText={(Text) => this.setState({ TextSeal: Text })}
+                                        placeholder='หมายเลข seal' />
+                                </Item>
+                                <Item style={{ backgroundColor: '#e0f7fa', margin: 1 }}>
+                                </Item>
+
+                                <Item rounded>
+                                    <Input style={{ fontSize: 14 }}
+                                        onChangeText={(Text) => this.setState({ Textbooking: Text })}
+                                        placeholder='หมายเลข Booking' />
+                                </Item>
+                                <Item style={{ backgroundColor: '#e0f7fa', margin: 1 }}>
+                                </Item>
+                            </Body>
                         </CardItem>
                     </Card>
-                    <Item>
-                        <Right style={{ marginRight:10}}>
-                            <View style={{ marginRight: 5 ,flexDirection: 'row'}}>
-                                <Text style={{ margin: 5 }}>เข้า</Text>
-                                <Radio color={"#f0ad4e"} selectedColor={"#5cb85c"} selected={false} />
-                                <Text style={{ margin: 5 }}>ออก</Text>
-                                <Radio color={"#f0ad4e"} selectedColor={"#5cb85c"} selected={false} />
-                            </View>
-                        </Right>
-                    </Item>
-
-                    <View style={{ flexDirection: 'row', backgroundColor: '#e5ffff', flex: 1, margin: 10 }}>
-                        <Body style={{ margin: 10 }}>
-                            <Text>ถ่ายด้านหน้า</Text>
-                            <TouchableOpacity onPress={()=>this.cameraconfirm('1')}>
-                            <Image source={require('./image/iconcamera.png')}/>
-                            </TouchableOpacity>
-                        </Body >
-
-                        <Body style={{ margin: 10 }}>
-                            <Text>ถ่ายด้านหลัง</Text>
-                            <TouchableOpacity onPress={()=>this.cameraconfirm('2')}>
-                            <Image source={require('./image/iconcamera.png')}/>
-                            </TouchableOpacity>
-                        </Body>
-                    </View>
-
-                    <View style={{ flexDirection: 'row', backgroundColor: '#e5ffff', flex: 1, margin: 10 }}>
-                        <Body style={{ margin: 10 }}>
-                            <Text>ถ่ายด้านซ้าย</Text>
-                            <TouchableOpacity onPress={()=>this.cameraconfirm('3')}>
-                            <Image source={require('./image/iconcamera.png')}/>
-                            </TouchableOpacity>
-                        </Body>
-                        <Body style={{ margin: 10 }}>
-                            <Text>ถ่ายด้ายขวา</Text>
-                            <TouchableOpacity onPress={()=>this.cameraconfirm('4')}>
-                            <Image source={require('./image/iconcamera.png')}/>
-                            </TouchableOpacity>
-                        </Body>
-                    </View>
-                    <Button full success>
-            <Text>Send</Text>
-          </Button>
+                    <Button block info onPress={() => this.functionDataset()}>
+                        <Text>ถ่ายรูป</Text>
+                    </Button>
                 </Content>
             </Container>
         );

@@ -29,6 +29,7 @@ export default class TestArray extends React.Component{
       onAddArray=()=>{
         const list = this.state.list.push(this.state.value);
       };
+      
       onChangeValue = (text) => {
         this.setState({ value:text });
       };
@@ -61,6 +62,5 @@ render(){
     </View>
     )
 }
-
 
 }
