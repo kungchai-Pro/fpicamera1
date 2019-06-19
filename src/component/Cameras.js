@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, TouchableOpacity, View, Image, Alert } from 'react-native';
 import { RNCamera } from 'react-native-camera';
-import { Button, Spinner } from 'native-base';
+
 //import { thisExpression } from '@babel/types';
 
 export default class Cameras extends Component {

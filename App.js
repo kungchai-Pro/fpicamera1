@@ -8,6 +8,7 @@ import potoSave from'./src/component/potoSave';
 import Loadingpoto from './src/component/Loadingpoto'
 import TestArray from './src/TestArray';
 import Potocapscreen from './src/PotocapScreen';
+import ModalExample from './src/ModalExample';
 
  class App extends Component {
 
@@ -40,10 +41,13 @@ const AppStack = createStackNavigator(
         },
         Test: {
           screen: TestArray
+        },
+        Modal: {
+          screen: ModalExample
         }
   },
   {
-    initialRouteName: "Home"
+    initialRouteName: "Modal"
   }
 );
 

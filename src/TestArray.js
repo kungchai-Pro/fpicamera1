@@ -3,7 +3,7 @@ import { AppRegistry, StyleSheet, Text,
      TouchableOpacity, View, Image, Alert,TextInput} from 'react-native';
 
 const INITIAL_STATE = {
-    list: [1, 2, 3],
+    list: []
   };
 
 export default class TestArray extends React.Component{
@@ -13,8 +13,8 @@ export default class TestArray extends React.Component{
     
         this.state ={
             value: '',
-            list: ['a', 'b', 'c'],
-            INITIAL_STATE
+            list: [1, 2, 3],
+           INITIAL_STATE
         } 
       }
 
