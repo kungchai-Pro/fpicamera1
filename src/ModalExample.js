@@ -61,7 +61,6 @@ export default class ModalExample extends React.Component {
                   console.log(barcodes);
                 }}
               />
-
               </View>
 
               <View style={{ flex: 0, flexDirection: 'row', justifyContent: 'center' }}>

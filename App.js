@@ -47,7 +47,7 @@ const AppStack = createStackNavigator(
         }
   },
   {
-    initialRouteName: "Modal"
+    initialRouteName: "Home"
   }
 );
 

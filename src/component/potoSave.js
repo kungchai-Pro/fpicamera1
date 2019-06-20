@@ -18,6 +18,7 @@ class potoSave extends React.Component {
             loading: false,
         }
     }
+    
         functionSetdataImage(){
             const data_params = this.props.navigation.state.params;
             // alert(data_params.typeimage+'-'+data_params.ImagePoto)
@@ -63,4 +64,5 @@ class potoSave extends React.Component {
         );
     }
 }
+
 export default potoSave
