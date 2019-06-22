@@ -4,7 +4,7 @@ import { AppRegistry, StyleSheet, Text, TouchableOpacity, View, Image ,Button,Al
 import { createStackNavigator,createAppContainer } from 'react-navigation';
 import HomeScreen from './src/HomeScreen';
 import  CamerasScreen from './src/component/Cameras';
-import potoSave from'./src/component/potoSave';
+// import potoSave from'./src/component/potoSave';
 import Loadingpoto from './src/component/Loadingpoto'
 import TestArray from './src/TestArray';
 import Potocapscreen from './src/PotocapScreen';
@@ -30,9 +30,9 @@ const AppStack = createStackNavigator(
         Cameras: {
           screen: CamerasScreen
         },
-        Poto: {
-          screen: potoSave
-        },
+        // Poto: {
+        //   screen: potoSave
+        // },
         LoadingPt: {
           screen: Loadingpoto
         },

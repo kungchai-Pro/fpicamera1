@@ -4,8 +4,9 @@ import {
     View, Image, Alert, AsyncStorage, Modal
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
+import { Savedatafull } from './component/potoSave';
+import { thisTypeAnnotation } from '@babel/types';
 export default class PotocapScreen extends React.Component {
-
     static navigationOptions = {
         header: null,
     };
@@ -17,7 +18,10 @@ export default class PotocapScreen extends React.Component {
             databookin: null,
             modalVisible: false,
             Typeim: null,
-            list: []
+            frontend: [],
+            backend: [],
+            Leftside: [],
+            Rightside: []
         }
     }
 
@@ -26,9 +30,9 @@ export default class PotocapScreen extends React.Component {
         AsyncStorage.multiGet(['Container', 'seal', 'booking'], (err, stores) => {
             stores.map((result, i, store) => {
                 this.setState({
-                    dataContainer:store[0][1],
-                    dataSeal:store[1][1],
-                    databookin:store[2][1]
+                    dataContainer: store[0][1],
+                    dataSeal: store[1][1],
+                    databookin: store[2][1]
                 });
             })
 
@@ -36,28 +40,78 @@ export default class PotocapScreen extends React.Component {
     }
 
 
-    // functioncapPoto(data) {
-    //     const { navigate } = this.props.navigation;
-    //     navigate('Cameras', { dataType: data });
+    //for delet AsyncStorage
+    // removedata(Type) {
+    // AsyncStorage.multiRemove(['Container', 'seal', 'booking'], (err) => {
+    //     console.log('Local storage user info removed!');
+    // });
+    // const { navigate } = this.props.navigation;
+    // navigate('Potocap',{dataType:Type})
+
+    // this.state.list.map(item => (
+    // console.log(item.IdType+"/"+item.uri_Image+"/"+item.id_contai+"/"+item.id_seal+"/"+item.id_bookiing)
+    // (this.testapp(item.IdType))
+    // ));
     // }
 
-    //for delet AsyncStorage
-    removedata(Type) {
-        // AsyncStorage.multiRemove(['Container', 'seal', 'booking'], (err) => {
-        //     console.log('Local storage user info removed!');
-        // });
-        // const { navigate } = this.props.navigation;
-        // navigate('Potocap',{dataType:Type})
+    senddataTo() {
 
-        this.state.list.map(item => (
-        console.log(item.IdType+"/"+item.uri_Image+"/"+item.id_contai+"/"+item.id_seal+"/"+item.id_bookiing)
-        (this.testapp(item.IdType))
-        ));
+        if (this.state.frontend.length == 0) {
+            //Savedatafull(this.state.frontend);
+            alert('ยังไม่ได้ถ่ายด้านหน้า');
+            return;
+        }
+        else if (this.state.backend.length == 0) {
+            alert('ยังไม่ได้ถ่ายด้านหลัง');
+            return;
+        }
+        else if (this.state.Leftside.length == 0) {
+            alert('ยังไม่ได้ถ่ายด้านซ้าย');
+            return;
+        }
+        else if (this.state.Rightside.length == 0) {
+            alert('ยังไม่ได้ถ่ายด้านขวา');
+            return;
+        }
+        else {
+            let frontends = this.state.frontend
+            new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    Savedatafull(frontends)
+                }, 100)
+            })
+
+            let backends = this.state.backend;
+            new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    Savedatafull(backends)
+                }, 100)
+            })
+
+            let Leftsides = this.state.Leftside;
+            new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    Savedatafull(Leftsides)
+                }, 100)
+            })
+            let Rightsides = this.state.Rightside;
+            new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    Savedatafull(Rightsides)
+                }, 100)
+            })
+
+
+        }
+        // Savedatafull(this.state.frontend)
+        //     Savedatafull(this.state.backend)
+        //         Savedatafull(this.state.Leftside)
+        //             Savedatafull(this.state.Rightside)
+        //                 alert('บันทึกข้อมูล');
+
     }
 
-    TestApp(item){
-            
-            }
+
     // control modal  propUp  on/off
     setModalVisible(visible) {
         this.setState({ modalVisible: visible });
@@ -79,20 +133,67 @@ export default class PotocapScreen extends React.Component {
                 base64: true,
                 fixOrientation: true
             };
-
             const data = await this.camera.takePictureAsync(options);
-            // console.log(data.uri);
-            //add data  to array
-            this.state.list.push({ IdType: this.state.Typeim, 
-                uri_Image: data.uri,
-                id_contai:this.state.dataContainer,
-                id_seal:this.state.dataSeal,
-                id_bookiing:this.state.databookin
-             })
+            //  console.log(data.uri);
+
+            switch (this.state.Typeim) {
+                case 1:
+                    this.setState({ frontend: [] })
+                    this.state.frontend.push({
+                        IdType: this.state.Typeim,
+                        uri_Image: data.uri,
+                        id_contai: this.state.dataContainer,
+                        id_seal: this.state.dataSeal,
+                        id_bookiing: this.state.databookin
+                    })
+                    this.setState({ frontend: this.state.frontend })
+                    console.log(this.state.frontend[0].IdType + '-' + this.state.frontend[0].uri_Image)
+                    Alert.alert('บันทึกด้านหน้า')
+                    break;
+                case 2:
+                    this.setState({ backend: [] })
+                    this.state.backend.push({
+                        IdType: this.state.Typeim,
+                        uri_Image: data.uri,
+                        id_contai: this.state.dataContainer,
+                        id_seal: this.state.dataSeal,
+                        id_bookiing: this.state.databookin
+                    })
+                    this.setState({ backend: this.state.backend })
+                    console.log(this.state.backend[0].IdType + '-' + this.state.backend[0].uri_Image)
+                    Alert.alert('บันทึกด้านหลัง')
+                    break;
+                case 3:
+                    this.setState({ Leftside: [] })
+                    this.state.Leftside.push({
+                        IdType: this.state.Typeim,
+                        uri_Image: data.uri,
+                        id_contai: this.state.dataContainer,
+                        id_seal: this.state.dataSeal,
+                        id_bookiing: this.state.databookin
+                    })
+                    this.setState({ Leftside: this.state.Leftside })
+                    console.log(this.state.Leftside[0].IdType + '-' + this.state.Leftside[0].uri_Image)
+                    Alert.alert('บันทึกด้านซ้าย')
+                    break;
+                case 4:
+                    this.setState({ Rightside: [] })
+                    this.state.Rightside.push({
+                        IdType: this.state.Typeim,
+                        uri_Image: data.uri,
+                        id_contai: this.state.dataContainer,
+                        id_seal: this.state.dataSeal,
+                        id_bookiing: this.state.databookin
+                    })
+                    this.setState({ Rightside: this.state.Rightside })
+                    console.log(this.state.Rightside[0].IdType + '-' + this.state.Rightside[0].uri_Image)
+                    Alert.alert('บันทึกด้านขวา')
+                    break;
+
+            }
             this.setModalVisible(!this.state.modalVisible);
         }
     }
-
 
     render() {
         return (
@@ -155,36 +256,23 @@ export default class PotocapScreen extends React.Component {
                 <View style={{ flex: 1, backgroundColor: '#80cbc4' }}>
                     <TouchableOpacity style={{ flex: 1, backgroundColor: '#4db6ac' }}
                         onPress={() => this.OncaremaModal(true, 3)}>
-                        <Text>ถ่ายด้านขวา</Text>
+                        <Text>ถ่ายด้านซ้าย</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1, backgroundColor: '#b2dfdb' }}>
                     <TouchableOpacity style={{ flex: 1, backgroundColor: '#4db6ac' }}
                         onPress={() => this.OncaremaModal(true, 4)}>
-                        <Text>ถ่ายด้านซ้าย</Text>
+                        <Text>ถ่ายด้านขวา</Text>
                     </TouchableOpacity>
                 </View>
                 <View style={{ flex: 1, backgroundColor: '#e0f2f1' }}>
                     <TouchableOpacity style={{ flex: 1 }}
-                        onPress={() => this.removedata(1)}
+                        onPress={() => this.senddataTo()}
                     >
                         <Text>
                             บันทึก
                         </Text>
                     </TouchableOpacity>
-                </View>
-                <View style={{ flex: 1 }}>
-                    {
-                        this.state.list.map(item => (
-                            <View key={item.IdType} style={{ flex: 1 }}>
-                                <Text>{item.IdType}</Text>
-                                <Text>{item.uri_Image}</Text>
-                                <Text>{item.id_contai}</Text>
-                                <Text>{item.id_seal}</Text>
-                                <Text>{item.id_bookiing}</Text>
-                            </View>
-                        ))
-                    }
                 </View>
             </View>
         );

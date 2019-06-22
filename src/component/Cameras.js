@@ -18,27 +18,60 @@ export default class Cameras extends Component {
     }
 
 
-    //   UpfilePicture(PicturePath) {
-    //     var Url = 'http://192.168.0.19:8080/uploadFile';
-    //     let body = new FormData();
-    //     body.append('file', { uri: PicturePath, name: 'photo.png', 
-    //     filename: 'imageName.png', type: 'image/png' });
-    //     body.append('Content-Type', 'image/png');
-    //     fetch(Url, {
-    //       method: 'POST', headers: {
-    //         "Content-Type": "multipart/form-data",
-    //         "otherHeader": "foo",
-    //       }, body: body
-    //     })
-    //       .then((response) => response.json())
-    //       .then((responseData) => {
-    //         alert(responseData);
-    //         //console.log(responseData.data);
-    //       })
-    //       .catch((e) => {
-    //         console.log(e)
-    //       })
-    //   }
+      UpfilePicture(PicturePath) {
+     //    alert(PicturePath)
+        const datadate='testdatalinst.png';
+        var Url = 'http://192.168.10.110:8080/api/uploadFile';
+        let body = new FormData();
+        body.append('file', { uri: PicturePath, name:datadate, 
+        filename: 'imageName.png', type: 'image/png'}
+        );
+        body.append('Content-Type', 'image/png');
+        fetch(Url, {
+          method: 'POST', headers: {
+            "Content-Type": "multipart/form-data",
+            "otherHeader": "foo",
+          }, body: body
+        })
+          .then((response) =>{
+                this.PostDataFuncion(datadate);
+            console.log(response);
+          } )
+          .catch((e) => {
+            console.log(e)
+          })
+      }
+
+      PostDataFuncion(id_im){
+     //   ChromeSamples.log('Posting request to GitHub API...');
+     opts={
+        containernumber:"WHLU5556479",
+        sealno:"WHLN553244",
+        booking:"0359X30952",
+        imageno:id_im,
+        datetimeactual:"2019-06-17",
+        typetnput:"1",
+        size:"40"
+     }
+        fetch('http://192.168.10.110:8080/api/Postcontainer', {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body:JSON.stringify(opts)
+        })
+        .then(function(response) { 
+                return response.json();
+        })
+        .then(function() {
+                ChromeSamples.log(response.json());
+        })
+        .catch((e) => {
+            console.log(e)
+          })
+
+      }
     //     <Text onPress={this.UpfilePicture(this.state.Imagedata)}  style={{fontSize:14,color:'red'}}>บันทึก</Text>
     render() {
 
@@ -98,14 +131,16 @@ export default class Cameras extends Component {
             
             const data = await this.camera.takePictureAsync(options);
             console.log(data.uri);
-            this.setState({
-                Imagedata: data.uri
-            }, function () {
-                // this.props.navigation.navigate('Poto')
+            this.UpfilePicture(data.uri)
+        //     this.setState({
+        //         Imagedata: data.uri
+        //     }, function () {
+        //    //     this.UpfilePicture(data.uri)
+        //         // this.props.navigation.navigate('Poto')
 
-                navigate('Poto', { ImagePoto: this.state.Imagedata, typeimage: data_params.dataType })
-                //alert(''+this.state.Imagedata);
-            })
+        //         // navigate('Poto', { ImagePoto: this.state.Imagedata, typeimage: data_params.dataType })
+        //         //alert(''+this.state.Imagedata);
+        //     })
         }
 
     }
