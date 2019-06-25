@@ -35,6 +35,13 @@ export default class TestArray extends React.Component{
       };
 
 render(){
+  var date = new Date().getDate(); //Current Date
+  var month = new Date().getMonth() + 1; //Current Month
+  var year = new Date().getFullYear(); //Current Year
+  var hours = new Date().getHours(); //Current Hours
+  var min = new Date().getMinutes(); //Current Minutes
+  var sec = new Date().getSeconds(); //Current Seconds
+   const imagetime=date+''+month+''+year+'_'+hours+''+min+''+sec;
     return(
         <View>
         {
@@ -42,6 +49,10 @@ render(){
             <Text key={item}>{item}</Text>
           ))
         }
+
+        <View>
+          <Text>{imagetime}</Text>
+          </View>
         <TextInput
         onChangeText={this.onChangeValue}
         value={this.state.value}

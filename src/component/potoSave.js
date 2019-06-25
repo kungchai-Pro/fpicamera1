@@ -22,9 +22,15 @@ export function Savedatafull(data) {
     // return  data[0].IdType;
 }
 function UpfilePicture(dataPath) {
-
+    var date = new Date().getDate(); //Current Date
+    var month = new Date().getMonth() + 1; //Current Month
+    var year = new Date().getFullYear(); //Current Year
+    var hours = new Date().getHours(); //Current Hours
+    var min = new Date().getMinutes(); //Current Minutes
+    var sec = new Date().getSeconds(); //Current Seconds
+     let imagetime=date+''+month+''+year+'_'+hours+''+min+''+sec;
     //    alert(PicturePath)
-    const datadate = 'testdatalinst.png';
+    let datadate = imagetime+dataPath[0].IdType+'.png';
     var Url = 'http://192.168.10.110:8080/api/uploadFile';
     let body = new FormData();
     body.append('file', {

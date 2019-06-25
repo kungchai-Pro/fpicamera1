@@ -21,7 +21,11 @@ export default class PotocapScreen extends React.Component {
             frontend: [],
             backend: [],
             Leftside: [],
-            Rightside: []
+            Rightside: [],
+            image1: null,
+            image2: null,
+            image3: null,
+            image4: null
         }
     }
 
@@ -56,6 +60,7 @@ export default class PotocapScreen extends React.Component {
 
     senddataTo() {
 
+
         if (this.state.frontend.length == 0) {
             //Savedatafull(this.state.frontend);
             alert('ยังไม่ได้ถ่ายด้านหน้า');
@@ -80,7 +85,6 @@ export default class PotocapScreen extends React.Component {
                     Savedatafull(frontends)
                 }, 100)
             })
-
             let backends = this.state.backend;
             new Promise(function (resolve, reject) {
                 setTimeout(function () {
@@ -148,6 +152,9 @@ export default class PotocapScreen extends React.Component {
                     })
                     this.setState({ frontend: this.state.frontend })
                     console.log(this.state.frontend[0].IdType + '-' + this.state.frontend[0].uri_Image)
+                    this.setState({
+                        image1: this.state.frontend[0].uri_Image
+                    })
                     Alert.alert('บันทึกด้านหน้า')
                     break;
                 case 2:
@@ -161,6 +168,9 @@ export default class PotocapScreen extends React.Component {
                     })
                     this.setState({ backend: this.state.backend })
                     console.log(this.state.backend[0].IdType + '-' + this.state.backend[0].uri_Image)
+                    this.setState({
+                        image2: this.state.backend[0].uri_Image
+                    })
                     Alert.alert('บันทึกด้านหลัง')
                     break;
                 case 3:
@@ -174,6 +184,9 @@ export default class PotocapScreen extends React.Component {
                     })
                     this.setState({ Leftside: this.state.Leftside })
                     console.log(this.state.Leftside[0].IdType + '-' + this.state.Leftside[0].uri_Image)
+                    this.setState({
+                        image3: this.state.Leftside[0].uri_Image
+                    })
                     Alert.alert('บันทึกด้านซ้าย')
                     break;
                 case 4:
@@ -187,9 +200,11 @@ export default class PotocapScreen extends React.Component {
                     })
                     this.setState({ Rightside: this.state.Rightside })
                     console.log(this.state.Rightside[0].IdType + '-' + this.state.Rightside[0].uri_Image)
+                    this.setState({
+                        image4: this.state.Rightside[0].uri_Image
+                    })
                     Alert.alert('บันทึกด้านขวา')
                     break;
-
             }
             this.setModalVisible(!this.state.modalVisible);
         }
@@ -240,30 +255,50 @@ export default class PotocapScreen extends React.Component {
                         </View>
                     </View>
                 </Modal>
+                <View style={{ flex: 1, flexDirection: 'row' }}>
+                    <View style={{ flex: 1, backgroundColor: '#009688' }}>
+                        <TouchableOpacity style={{ flex: 1, backgroundColor: '#26a69a' }}
+                            onPress={() => this.OncaremaModal(true, 1)}>
+                            <Text>ถ่ายด้านหน้า</Text>
 
-                <View style={{ flex: 1, backgroundColor: '#009688' }}>
-                    <TouchableOpacity style={{ flex: 1, backgroundColor: '#26a69a' }}
-                        onPress={() => this.OncaremaModal(true, 1)}>
-                        <Text>ถ่ายด้านหน้า</Text>
-                    </TouchableOpacity>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ flex: 1, backgroundColor: '#f8bbd0' }}>
+                    <Image source={{ uri: this.state.image1}} style={{ height: 50, width: null, flex: 1 }} />
+                    </View>
                 </View>
-                <View style={{ flex: 1 }}>
-                    <TouchableOpacity style={{ flex: 1, backgroundColor: '#4db6ac' }}
-                        onPress={() => this.OncaremaModal(true, 2)}>
-                        <Text>ถ่ายด้านหลัง</Text>
-                    </TouchableOpacity>
+                <View style={{ flex: 1, flexDirection: 'row' }}>
+                    <View style={{ flex: 1, backgroundColor: '#fce4ec' }}>
+                        <TouchableOpacity style={{ flex: 1, backgroundColor: '#4db6ac' }}
+                            onPress={() => this.OncaremaModal(true, 2)}>
+                            <Text>ถ่ายด้านหลัง</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ flex: 1, backgroundColor: '#f8bbd0' }}>
+                    <Image source={{ uri: this.state.image2}} style={{ height: 50, width: null, flex: 1 }} />
+                    </View>
                 </View>
-                <View style={{ flex: 1, backgroundColor: '#80cbc4' }}>
-                    <TouchableOpacity style={{ flex: 1, backgroundColor: '#4db6ac' }}
-                        onPress={() => this.OncaremaModal(true, 3)}>
-                        <Text>ถ่ายด้านซ้าย</Text>
-                    </TouchableOpacity>
+                <View style={{ flex: 1, flexDirection: 'row' }}>
+                    <View style={{ flex: 1, backgroundColor: '#80cbc4' }}>
+                        <TouchableOpacity style={{ flex: 1, backgroundColor: '#4db6ac' }}
+                            onPress={() => this.OncaremaModal(true, 3)}>
+                            <Text>ถ่ายด้านซ้าย</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ flex: 1, backgroundColor: '#f8bbd0' }}>
+                    <Image source={{ uri: this.state.image3}} style={{ height: 50, width: null, flex: 1 }} />
+                    </View>
                 </View>
-                <View style={{ flex: 1, backgroundColor: '#b2dfdb' }}>
-                    <TouchableOpacity style={{ flex: 1, backgroundColor: '#4db6ac' }}
-                        onPress={() => this.OncaremaModal(true, 4)}>
-                        <Text>ถ่ายด้านขวา</Text>
-                    </TouchableOpacity>
+                <View style={{ flex: 1, flexDirection: 'row' }}>
+                    <View style={{ flex: 1, backgroundColor: '#b2dfdb' }}>
+                        <TouchableOpacity style={{ flex: 1, backgroundColor: '#4db6ac' }}
+                            onPress={() => this.OncaremaModal(true,4)}>
+                            <Text>ถ่ายด้านขวา</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{ flex: 1, backgroundColor: '#f8bbd0' }}>
+                    <Image source={{ uri: this.state.image4}} style={{ height: 50, width: null, flex: 1 }} />
+                    </View>
                 </View>
                 <View style={{ flex: 1, backgroundColor: '#e0f2f1' }}>
                     <TouchableOpacity style={{ flex: 1 }}
