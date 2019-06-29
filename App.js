@@ -9,6 +9,7 @@ import Loadingpoto from './src/component/Loadingpoto'
 import TestArray from './src/TestArray';
 import Potocapscreen from './src/PotocapScreen';
 import ModalExample from './src/ModalExample';
+import SendDataScreen from'./src/SendDataScreen';
 
  class App extends Component {
 
@@ -44,10 +45,13 @@ const AppStack = createStackNavigator(
         },
         Modal: {
           screen: ModalExample
+        },
+        SendData: {
+          screen: SendDataScreen
         }
   },
   {
-    initialRouteName: "Potocap"
+    initialRouteName: "SendData"
   }
 );
 
