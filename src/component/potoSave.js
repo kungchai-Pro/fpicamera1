@@ -85,5 +85,4 @@ function PostDataFuncion(id_im,id_name) {
     .catch((e) => {
             console.log(e)
     })
-
 }

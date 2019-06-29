@@ -5,7 +5,6 @@ import {
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { Savedatafull } from './component/potoSave';
-import { thisTypeAnnotation } from '@babel/types';
 export default class PotocapScreen extends React.Component {
     static navigationOptions = {
         header: null,
@@ -138,8 +137,8 @@ export default class PotocapScreen extends React.Component {
                 fixOrientation: true
             };
             const data = await this.camera.takePictureAsync(options);
-            //  console.log(data.uri);
-
+           //  console.log(data);
+            if((data.width <= 3096)||(data.height <= 4128)){
             switch (this.state.Typeim) {
                 case 1:
                     this.setState({ frontend: [] })
@@ -206,6 +205,9 @@ export default class PotocapScreen extends React.Component {
                     Alert.alert('บันทึกด้านขวา')
                     break;
             }
+        }else{
+            alert('รูปขนาดใหญ่เกินไป')
+        }
             this.setModalVisible(!this.state.modalVisible);
         }
     }
@@ -255,53 +257,60 @@ export default class PotocapScreen extends React.Component {
                         </View>
                     </View>
                 </Modal>
-                <View style={{ flex: 1, flexDirection: 'row' }}>
-                    <View style={{ flex: 1, backgroundColor: '#009688' }}>
-                        <TouchableOpacity style={{ flex: 1, backgroundColor: '#26a69a' }}
+                <View style={{ flex: 1, flexDirection: 'row',margin:1 }}>
+                    <View style={styles.boxcamera1}>
+                        <TouchableOpacity style={{ flex: 1,alignItems:'center'}}
                             onPress={() => this.OncaremaModal(true, 1)}>
                             <Text>ถ่ายด้านหน้า</Text>
-
+                            <Image source={require('./image/iconfinder_5_940992.png')} style={{width:70,height:70}}/>
                         </TouchableOpacity>
                     </View>
-                    <View style={{ flex: 1, backgroundColor: '#f8bbd0' }}>
-                    <Image source={{ uri: this.state.image1}} style={{ height: 50, width: null, flex: 1 }} />
+                    <View style={{ flex:1,margin:1,backgroundColor:'#f8fdff'}}>
+                        <Text>ภาพที่1</Text>
+                    <Image source={{ uri: this.state.image1,margin:1,borderRadius:5}} style={{ height: 30, width: null, flex: 1 }} />
                     </View>
                 </View>
-                <View style={{ flex: 1, flexDirection: 'row' }}>
-                    <View style={{ flex: 1, backgroundColor: '#fce4ec' }}>
-                        <TouchableOpacity style={{ flex: 1, backgroundColor: '#4db6ac' }}
+                <View style={{ flex: 1, flexDirection: 'row',margin:1 }}>
+                    <View style={styles.boxcamera1}>
+                        <TouchableOpacity style={{ flex: 1,alignItems:'center'}}
                             onPress={() => this.OncaremaModal(true, 2)}>
-                            <Text>ถ่ายด้านหลัง</Text>
+                            <Text style={{margin:2}}>ถ่ายด้านหลัง</Text>
+                            <Image source={require('./image/iconfinder_5_940992.png')} style={{width:70,height:70}}/>
                         </TouchableOpacity>
                     </View>
-                    <View style={{ flex: 1, backgroundColor: '#f8bbd0' }}>
+                    <View style={{ flex: 1, backgroundColor: '#f8fdff' }}>
+                    <Text>ภาพที่2</Text>
                     <Image source={{ uri: this.state.image2}} style={{ height: 50, width: null, flex: 1 }} />
                     </View>
                 </View>
-                <View style={{ flex: 1, flexDirection: 'row' }}>
-                    <View style={{ flex: 1, backgroundColor: '#80cbc4' }}>
-                        <TouchableOpacity style={{ flex: 1, backgroundColor: '#4db6ac' }}
+                <View style={{ flex: 1, flexDirection: 'row',margin:1 }}>
+                    <View style={styles.boxcamera1}>
+                        <TouchableOpacity style={{ flex: 1,alignItems:'center'}}
                             onPress={() => this.OncaremaModal(true, 3)}>
                             <Text>ถ่ายด้านซ้าย</Text>
+                            <Image source={require('./image/iconfinder_5_940992.png')} style={{width:70,height:70}}/>
                         </TouchableOpacity>
                     </View>
-                    <View style={{ flex: 1, backgroundColor: '#f8bbd0' }}>
+                    <View style={{ flex: 1, backgroundColor: '#f8fdff' }}>
+                    <Text>ภาพที่3</Text>
                     <Image source={{ uri: this.state.image3}} style={{ height: 50, width: null, flex: 1 }} />
                     </View>
                 </View>
-                <View style={{ flex: 1, flexDirection: 'row' }}>
-                    <View style={{ flex: 1, backgroundColor: '#b2dfdb' }}>
-                        <TouchableOpacity style={{ flex: 1, backgroundColor: '#4db6ac' }}
+                <View style={{ flex: 1, flexDirection: 'row',margin:1 }}>
+                    <View style={styles.boxcamera1}>
+                        <TouchableOpacity style={{ flex: 1, alignItems:'center'}}
                             onPress={() => this.OncaremaModal(true,4)}>
                             <Text>ถ่ายด้านขวา</Text>
+                            <Image source={require('./image/iconfinder_5_940992.png')} style={{width:70,height:70}}/>
                         </TouchableOpacity>
                     </View>
-                    <View style={{ flex: 1, backgroundColor: '#f8bbd0' }}>
+                    <View style={{ flex: 1, backgroundColor: '#f8fdff' }}>
+                    <Text>ภาพที่4</Text>
                     <Image source={{ uri: this.state.image4}} style={{ height: 50, width: null, flex: 1 }} />
                     </View>
                 </View>
-                <View style={{ flex: 1, backgroundColor: '#e0f2f1' }}>
-                    <TouchableOpacity style={{ flex: 1 }}
+                <View style={{ flex: 1, backgroundColor: '#e0f2f1' ,alignItems:'center'}}>
+                    <TouchableOpacity style={{ flex: 1 ,alignItems:'center',justifyContent: 'center'}}
                         onPress={() => this.senddataTo()}
                     >
                         <Text>
@@ -335,4 +344,11 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         margin: 20,
     },
+    boxcamera1:{
+        flex: 1, 
+        backgroundColor: '#e8eaf6',
+        margin:1,
+        borderBottomRightRadius:10,
+        borderBottomLeftRadius:10 
+    }
 });
