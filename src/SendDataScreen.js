@@ -43,11 +43,11 @@ export default class SendDataScreen extends React.Component {
         const { navigate } = this.props.navigation;
         const data_params = this.props.navigation.state.params;
         console.log(data_params.Leftsides[0]);
-
         // let frontends = this.state.frontend
         new Promise(function (resolve, reject) {
             setTimeout(function () {
                 Savedatafull(data_params.frontends[0])
+               
             }, 100)
         })
         // let backends = this.state.backend;
@@ -77,6 +77,9 @@ export default class SendDataScreen extends React.Component {
             }, 100)
         })
 
+  
+    //    alert(timmout);
+        // if(timmout==1){
         Alert.alert(
             'บันทึก',
             'ทำการบันทึกแล้ว',
@@ -84,6 +87,17 @@ export default class SendDataScreen extends React.Component {
                 { text: 'OK', onPress: () => navigate('Home') },
             ]
         )
+        // }
+        // else{
+        //     Alert.alert(
+        //         'แจ้งเตือน',
+        //         'กรุณาตรวจสอบการเชื่อต่อ',
+        //         [
+        //             { text: 'OK', onPress: () => console.log('connect Netword Error')},
+        //         ]
+        //     )
+
+        // }
     }
 
 

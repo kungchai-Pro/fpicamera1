@@ -34,6 +34,32 @@ export default class TestArray extends React.Component{
         this.setState({ value:text });
       };
 
+       getCurrentTime() {
+        // Get the current 'global' time from an API
+        
+          // randomly decide if the date is retrieved or not
+        
+
+      }
+
+    Datatest=()=>{ 
+
+      return fetch('https://facebook.github.io/react-native/')
+      .then((response) => response.json())
+      .then((responseJson) => {
+          // if(Math.random() >= 0.5) resolve('BabelCoder!')
+          // else reject(new Error('Less than 0.5!'))
+        return responseJson.movies;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+
+      }
+      
+    
+  
+
 render(){
   var date = new Date().getDate(); //Current Date
   var month = new Date().getMonth() + 1; //Current Month
@@ -69,6 +95,10 @@ render(){
         <TouchableOpacity  onPress={this.onAddArray}>
           <Text>Add Array</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity onPress={this.Datatest}>
+          <Text>ทดสอบ</Text>
+          </TouchableOpacity>
 
     </View>
     )

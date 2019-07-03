@@ -142,7 +142,7 @@ export default class HomeScreen extends React.Component {
                                     mode="dropdown"
                                     iosIcon={<Icon name="arrow-down" />}
                                     headerBackButtonText="Baaack!"
-                                    selectedValue={this.state.selected}
+                                    selectedValue={this.state.InOut}
                                     onValueChange={this.onValueChange.bind(this)}
                                 >
                                     <Picker.Item label="เข้า" value="In" />

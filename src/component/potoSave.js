@@ -1,84 +1,69 @@
-// function apilogin(us,pw){
 
-//     var url = 'http://192.168.10.110:8080/api/auth/signin';
-//     var data = {
-//         "username":us,
-//         "password":pw
-//     }
-//  return fetch(url, {
-//       method: 'POST', // or 'PUT'
-//       body: JSON.stringify(data), // data can be `string` or {object}!
-//       headers:{
-//         'Content-Type': 'application/json'
-//       }
-//     })
-//     .then(res => res.json())
-//     .catch(error => console.error('Error:', error));
-// }
-
+import { URL } from './confingURL'
 export function Savedatafull(data) {
-    // console.log(data.IdType)
-//    return '1'
     return UpfilePicture(data)
-    // return  data[0].IdType;
 }
-
 function UpfilePicture(dataPath) {
-    var date = new Date().getDate(); //Current Date
-    var month = new Date().getMonth() + 1; //Current Month
-    var year = new Date().getFullYear(); //Current Year
-    var hours = new Date().getHours(); //Current Hours
-    var min = new Date().getMinutes(); //Current Minutes
-    var sec = new Date().getSeconds(); //Current Seconds
-     let imagetime=date+''+month+''+year+'_'+hours+''+min+''+sec;
-    //    alert(PicturePath)
-    let datadate = imagetime+dataPath.IdType+'.png';
-    var Url = 'http://192.168.10.110:8080/api/uploadFile';
-    let body = new FormData();
-    body.append('file', {
-        uri: dataPath.uri_Image, name: datadate,
-        filename: 'imageName.png', type: 'image/png'
-    }
-    );
-    body.append('Content-Type', 'image/png');
-    fetch(Url, {
-        method: 'POST', headers: {
-            "Content-Type": "multipart/form-data",
-            "otherHeader": "foo",
-        }, body: body
-    })
-        .then((response) => {
-                PostDataFuncion(dataPath,datadate);
-            console.log(response);
+
+        let Url = URL()
+        var date = new Date().getDate(); //Current Date
+        var month = new Date().getMonth() + 1; //Current Month
+        var year = new Date().getFullYear(); //Current Year
+        var hours = new Date().getHours(); //Current Hours
+        var min = new Date().getMinutes(); //Current Minutes
+        var sec = new Date().getSeconds(); //Current Seconds
+        let imagetime = date + '' + month + '' + year + '_' + hours + '' + min + '' + sec;
+        //    alert(PicturePath)
+        let datadate = imagetime + dataPath.IdType + '.png';
+        var urls = Url + 'uploadFile';
+        let body = new FormData();
+        body.append('file', {
+            uri: dataPath.uri_Image, name: datadate,
+            filename: 'imageName.png', type: 'image/png'
+        }
+        );
+        body.append('Content-Type', 'image/png');
+        fetch(urls, {
+            method: 'POST', headers: {
+                "Content-Type": "multipart/form-data",
+                "otherHeader": "foo",
+            },
+            body: body
         })
-        .catch((e) => {
-            alert(e)
-            console.log(e)
-        })
+            .then((response) => {
+
+                clearTimeout(timeout);
+                if (response && response.status == 200) {
+                    PostDataFuncion(dataPath, datadate);
+                    return response.json();
+                }
+                else reject(new Error('Response error'));
+
+
+                console.log(response);
+            })
+            .catch((e) => {
+                alert(e)
+                console.log(e)
+            })
+
+
 }
 
-function PostDataFuncion(id_im,id_name) {
-    //   ChromeSamples.log('Posting request to GitHub API...');
-    //  console.log(id_im.IdType)
-    //  console.log(id_im.Id_InOut)
-    //  console.log(id_im.id_booking)
-    //  console.log(id_im.id_contai)
-    //  console.log(id_im.id_seal)
-    //  console.log(id_name)
- 
-
+function PostDataFuncion(id_im, id_name) {
+    let Url = URL()
     opts = {
-        containerNO:id_im.id_contai,
+        containerNO: id_im.id_contai,
         sealNo: id_im.id_seal,
-        booking:id_im.id_booking,
-        potoImage:id_name,
-        typeinput:id_im.Id_InOut,
+        booking: id_im.id_booking,
+        potoImage: id_name,
+        typeinput: id_im.Id_InOut,
         typeImage: id_im.IdType,
         datetime: "2019-06-17",
         sizeCn: "0"
     }
-    
-    fetch('http://192.168.10.110:8080/api/Postcontainer', {
+
+    fetch(Url + 'Postcontainer', {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -86,11 +71,39 @@ function PostDataFuncion(id_im,id_name) {
         },
         body: JSON.stringify(opts)
     })
-    .then((response) => {
-    console.log(response);
-    
-    })
-    .catch((e) => {
+        .then((response) => {
+            console.log(response);
+
+        })
+        .catch((e) => {
             console.log(e)
-    })
+        })
 }
+
+
+
+// var FETCH_TIMEOUT = 5000;
+// new Promise(function (resolve, reject) {
+//     var timeout = setTimeout(function () {
+//         reject(new Error('Request timed out'));
+//     }, FETCH_TIMEOUT);
+//     fetch('https://example.com/request&#39')
+//         .then(function (response) {
+//             clearTimeout(timeout);
+//             if (response && response.status == 200) return response.json();
+//             else reject(new Error('Response error'));
+//         })
+//         .then(function (responseObject) {
+//             // process results
+//             resolve();
+//         })
+//         .catch(function (err) {
+//             reject(err);
+//         });
+// })
+//     .then(function () {
+//         // request succeed
+//     })
+//     .catch(function (err) {
+//         // error: response error, request timeout or runtime error
+//     });
