@@ -15,6 +15,7 @@ export default class PotocapScreen extends React.Component {
             dataContainer: null,
             dataSeal: null,
             databookin: null,
+            InOut:null,
             modalVisible: false,
             Typeim: null,
             frontend: [],
@@ -30,12 +31,14 @@ export default class PotocapScreen extends React.Component {
 
     componentDidMount() {
         // for get  AsyncStorage
-        AsyncStorage.multiGet(['Container', 'seal', 'booking'], (err, stores) => {
+        console.disableYellowBox = true;
+        AsyncStorage.multiGet(['Container', 'seal', 'booking','InOut'], (err, stores) => {
             stores.map((result, i, store) => {
                 this.setState({
                     dataContainer: store[0][1],
                     dataSeal: store[1][1],
-                    databookin: store[2][1]
+                    databookin: store[2][1],
+                    InOut:store[3][1]
                 });
             })
 
@@ -61,21 +64,21 @@ export default class PotocapScreen extends React.Component {
 
         if (this.state.frontend.length == 0) {
             //Savedatafull(this.state.frontend);
-            alert('ยังไม่ได้ถ่ายด้านหน้า');
+            Alert.alert('ยังไม่ได้ถ่ายด้านหน้า');
             return;
         }
-        // else if (this.state.backend.length == 0) {
-        //     alert('ยังไม่ได้ถ่ายด้านหลัง');
-        //     return;
-        // }
-        // else if (this.state.Leftside.length == 0) {
-        //     alert('ยังไม่ได้ถ่ายด้านซ้าย');
-        //     return;
-        // }
-        // else if (this.state.Rightside.length == 0) {
-        //     alert('ยังไม่ได้ถ่ายด้านขวา');
-        //     return;
-        // }
+        else if (this.state.backend.length == 0) {
+            Alert.alert('ยังไม่ได้ถ่ายด้านหลัง');
+            return;
+        }
+        else if (this.state.Leftside.length == 0) {
+            Alert.alert('ยังไม่ได้ถ่ายด้านซ้าย');
+            return;
+        }
+        else if (this.state.Rightside.length == 0) {
+            Alert.alert('ยังไม่ได้ถ่ายด้านขวา');
+            return;
+        }
         else {
             const { navigate } = this.props.navigation;
             navigate('SendData',{
@@ -84,41 +87,8 @@ export default class PotocapScreen extends React.Component {
                 Leftsides : this.state.Leftside,
                 Rightsides : this.state.Rightside
             })
-            // let frontends = this.state.frontend
-            // new Promise(function (resolve, reject) {
-            //     setTimeout(function () {
-            //         Savedatafull(frontends)
-            //     }, 100)
-            // })
-            // let backends = this.state.backend;
-            // new Promise(function (resolve, reject) {
-            //     setTimeout(function () {
-            //         Savedatafull(backends)
-            //     }, 100)
-            // })
-
-            // let Leftsides = this.state.Leftside;
-            // new Promise(function (resolve, reject) {
-            //     setTimeout(function () {
-            //         Savedatafull(Leftsides)
-            //     }, 100)
-            // })
-            // let Rightsides = this.state.Rightside;
-            // new Promise(function (resolve, reject) {
-            //     setTimeout(function () {
-            //         Savedatafull(Rightsides)
-            //     }, 100)
-            // })
-
         }
-        // Savedatafull(this.state.frontend)
-        //     Savedatafull(this.state.backend)
-        //         Savedatafull(this.state.Leftside)
-        //             Savedatafull(this.state.Rightside)
-        //                 alert('บันทึกข้อมูล');
-
     }
-
 
     // control modal  propUp  on/off
     setModalVisible(visible) {
@@ -152,7 +122,8 @@ export default class PotocapScreen extends React.Component {
                         uri_Image: data.uri,
                         id_contai: this.state.dataContainer,
                         id_seal: this.state.dataSeal,
-                        id_bookiing: this.state.databookin
+                        id_booking: this.state.databookin,
+                        Id_InOut:this.state.InOut
                     })
                     this.setState({ frontend: this.state.frontend })
                     console.log(this.state.frontend[0].IdType + '-' + this.state.frontend[0].uri_Image)
@@ -168,7 +139,8 @@ export default class PotocapScreen extends React.Component {
                         uri_Image: data.uri,
                         id_contai: this.state.dataContainer,
                         id_seal: this.state.dataSeal,
-                        id_bookiing: this.state.databookin
+                        id_booking: this.state.databookin,
+                        Id_InOut:this.state.InOut
                     })
                     this.setState({ backend: this.state.backend })
                     console.log(this.state.backend[0].IdType + '-' + this.state.backend[0].uri_Image)
@@ -184,7 +156,8 @@ export default class PotocapScreen extends React.Component {
                         uri_Image: data.uri,
                         id_contai: this.state.dataContainer,
                         id_seal: this.state.dataSeal,
-                        id_bookiing: this.state.databookin
+                        id_booking: this.state.databookin,
+                        Id_InOut:this.state.InOut
                     })
                     this.setState({ Leftside: this.state.Leftside })
                     console.log(this.state.Leftside[0].IdType + '-' + this.state.Leftside[0].uri_Image)
@@ -200,7 +173,8 @@ export default class PotocapScreen extends React.Component {
                         uri_Image: data.uri,
                         id_contai: this.state.dataContainer,
                         id_seal: this.state.dataSeal,
-                        id_bookiing: this.state.databookin
+                        id_booking: this.state.databookin,
+                        Id_InOut:this.state.InOut
                     })
                     this.setState({ Rightside: this.state.Rightside })
                     console.log(this.state.Rightside[0].IdType + '-' + this.state.Rightside[0].uri_Image)
@@ -225,7 +199,7 @@ export default class PotocapScreen extends React.Component {
                     transparent={false}
                     visible={this.state.modalVisible}
                     onRequestClose={() => {
-                        Alert.alert('Modal has been closed.');
+                        Alert.alert('คุณยังไม่ได้ถ่ายภาพ');
                     }}>
                     <View style={{ marginTop: 2, flex: 1 }}>
                         <View style={{ flex: 1 }}>
@@ -262,17 +236,20 @@ export default class PotocapScreen extends React.Component {
                         </View>
                     </View>
                 </Modal>
+                <View style={{marginTop:5,backgroundColor:'#8eacbb',marginVertical:5}}>
+                    <Text style={{color:'#4b636e',fontSize:16,marginLeft:15}}>FPI Camera Input</Text>
+                    </View>
                 <View style={{ flex: 1, flexDirection: 'row',margin:1 }}>
                     <View style={styles.boxcamera1}>
                         <TouchableOpacity style={{ flex: 1,alignItems:'center'}}
                             onPress={() => this.OncaremaModal(true, 1)}>
                             <Text>ถ่ายด้านหน้า</Text>
-                            <Image source={require('./image/iconfinder_5_940992.png')} style={{resizeMode:'contain',width:70,height:70}}/>
+                            <Image source={require('./image/iconfinder_5_940992.png')} style={{resizeMode:'contain',width:50,height:50}}/>
                         </TouchableOpacity>
                     </View>
                     <View style={{ flex:1,margin:1,backgroundColor:'#f8fdff'}}>
                         <Text>ภาพที่1</Text>
-                    <Image source={{ uri: this.state.image1,margin:1,borderRadius:5}} style={{ resizeMode:'contain',height: 50, width: null, flex: 1 }} />
+                    <Image source={{ uri: this.state.image1}} style={{ resizeMode:'contain',height: 150, width: null, flex: 1 }} />
                     </View>
                 </View>
                 <View style={{ flex: 1, flexDirection: 'row',margin:1 }}>
@@ -280,7 +257,7 @@ export default class PotocapScreen extends React.Component {
                         <TouchableOpacity style={{ flex: 1,alignItems:'center'}}
                             onPress={() => this.OncaremaModal(true, 2)}>
                             <Text style={{margin:2}}>ถ่ายด้านหลัง</Text>
-                            <Image source={require('./image/iconfinder_5_940992.png')} style={{ImageResizeMode:'center',width:70,height:70}}/>
+                            <Image source={require('./image/iconfinder_5_940992.png')} style={{ImageResizeMode:'center',width:50,height:50}}/>
                         </TouchableOpacity>
                     </View>
                     <View style={{ flex: 1, backgroundColor: '#f8fdff' }}>
@@ -293,7 +270,7 @@ export default class PotocapScreen extends React.Component {
                         <TouchableOpacity style={{ flex: 1,alignItems:'center'}}
                             onPress={() => this.OncaremaModal(true, 3)}>
                             <Text>ถ่ายด้านซ้าย</Text>
-                            <Image source={require('./image/iconfinder_5_940992.png')} style={{resizeMode:'contain',width:70,height:70}}/>
+                            <Image source={require('./image/iconfinder_5_940992.png')} style={{resizeMode:'contain',width:50,height:50}}/>
                         </TouchableOpacity>
                     </View>
                     <View style={{ flex: 1, backgroundColor: '#f8fdff' }}>
@@ -306,7 +283,7 @@ export default class PotocapScreen extends React.Component {
                         <TouchableOpacity style={{ flex: 1, alignItems:'center'}}
                             onPress={() => this.OncaremaModal(true,4)}>
                             <Text>ถ่ายด้านขวา</Text>
-                            <Image source={require('./image/iconfinder_5_940992.png')} style={{resizeMode:'contain',width:70,height:70}}/>
+                            <Image source={require('./image/iconfinder_5_940992.png')} style={{resizeMode:'contain',width:50,height:50}}/>
                         </TouchableOpacity>
                     </View>
                     <View style={{ flex: 1, backgroundColor: '#f8fdff' }}>
@@ -314,15 +291,15 @@ export default class PotocapScreen extends React.Component {
                     <Image source={{ uri: this.state.image4}} style={{ resizeMode:'contain',height: 50, width: null, flex: 1 }} />
                     </View>
                 </View>
-                <View style={{ flex: 1, backgroundColor: '#e0f2f1' ,alignItems:'center'}}>
-                    <TouchableOpacity style={{ flex: 1 ,alignItems:'center',justifyContent: 'center'}}
+                 {/* <View style={{ flex: 1 ,alignItems:'center',justifyContent: 'center'}}>  */}
+                    <TouchableOpacity style={{alignItems:'center',justifyContent: 'center',backgroundColor:'#607d8b',borderRadius:20,margin:15}}
                         onPress={() => this.senddataTo()}
                     >
-                        <Text>
+                        <Text style={{color:'#ffffff',fontSize:16,margin:10,padding:5}}>
                             ตรวจข้อมูล
                         </Text>
                     </TouchableOpacity>
-                </View>
+                 {/* </View>  */}
             </View>
         );
     }
@@ -342,7 +319,7 @@ const styles = StyleSheet.create({
     },
     capture: {
         flex: 0,
-        backgroundColor: '#fff',
+        backgroundColor: '#64b5f6',
         borderRadius: 5,
         padding: 15,
         paddingHorizontal: 20,
@@ -353,7 +330,6 @@ const styles = StyleSheet.create({
         flex: 1, 
         backgroundColor: '#e8eaf6',
         margin:1,
-        borderBottomRightRadius:10,
-        borderBottomLeftRadius:10 
+        borderRadius:10
     }
 });

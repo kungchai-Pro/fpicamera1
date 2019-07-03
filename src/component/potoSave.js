@@ -17,10 +17,12 @@
 // }
 
 export function Savedatafull(data) {
-    console.log(data[0].IdType)
+    // console.log(data.IdType)
+//    return '1'
     return UpfilePicture(data)
     // return  data[0].IdType;
 }
+
 function UpfilePicture(dataPath) {
     var date = new Date().getDate(); //Current Date
     var month = new Date().getMonth() + 1; //Current Month
@@ -30,11 +32,11 @@ function UpfilePicture(dataPath) {
     var sec = new Date().getSeconds(); //Current Seconds
      let imagetime=date+''+month+''+year+'_'+hours+''+min+''+sec;
     //    alert(PicturePath)
-    let datadate = imagetime+dataPath[0].IdType+'.png';
+    let datadate = imagetime+dataPath.IdType+'.png';
     var Url = 'http://192.168.10.110:8080/api/uploadFile';
     let body = new FormData();
     body.append('file', {
-        uri: dataPath[0].uri_Image, name: datadate,
+        uri: dataPath.uri_Image, name: datadate,
         filename: 'imageName.png', type: 'image/png'
     }
     );
@@ -50,27 +52,32 @@ function UpfilePicture(dataPath) {
             console.log(response);
         })
         .catch((e) => {
+            alert(e)
             console.log(e)
         })
 }
 
 function PostDataFuncion(id_im,id_name) {
     //   ChromeSamples.log('Posting request to GitHub API...');
-     console.log(id_im[0].id_contai)
-     console.log(id_im[0].id_seal)
-     console.log(id_im[0].id_bookiing)
-     console.log(id_im[0].IdType)
+    //  console.log(id_im.IdType)
+    //  console.log(id_im.Id_InOut)
+    //  console.log(id_im.id_booking)
+    //  console.log(id_im.id_contai)
+    //  console.log(id_im.id_seal)
+    //  console.log(id_name)
  
 
     opts = {
-        containernumber:id_im[0].id_contai,
-        sealno: id_im[0].id_seal,
-        booking:id_im[0].id_bookiing,
-        imageno:id_name,
-        datetimeactual: "2019-06-17",
-        typetnput: id_im[0].IdType,
-        size: "40"
+        containerNO:id_im.id_contai,
+        sealNo: id_im.id_seal,
+        booking:id_im.id_booking,
+        potoImage:id_name,
+        typeinput:id_im.Id_InOut,
+        typeImage: id_im.IdType,
+        datetime: "2019-06-17",
+        sizeCn: "0"
     }
+    
     fetch('http://192.168.10.110:8080/api/Postcontainer', {
         method: 'POST',
         headers: {
@@ -81,6 +88,7 @@ function PostDataFuncion(id_im,id_name) {
     })
     .then((response) => {
     console.log(response);
+    
     })
     .catch((e) => {
             console.log(e)

@@ -51,7 +51,7 @@ const AppStack = createStackNavigator(
         }
   },
   {
-    initialRouteName: "SendData"
+    initialRouteName: "Home"
   }
 );
 
