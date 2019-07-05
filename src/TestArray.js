@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text,
-     TouchableOpacity, View, Image, Alert,TextInput} from 'react-native';
+     TouchableOpacity, View, Image, Alert,TextInput,NetInfo,Platform,ConnectionType } from 'react-native';
 
 const INITIAL_STATE = {
     list: []
@@ -34,31 +34,23 @@ export default class TestArray extends React.Component{
         this.setState({ value:text });
       };
 
-       getCurrentTime() {
-        // Get the current 'global' time from an API
-        
-          // randomly decide if the date is retrieved or not
-        
+      componentDidMount() {
+
+        NetInfo.getConnectionInfo().then((connectionInfo) => {
+          // this.setState({isConnected: connectionInfo.type !== 'none'})
+          if(connectionInfo.type !== 'none'){
+            alert(connectionInfo.type);
+          }
+          
+        });
+
+        // NetInfo.isConnected.addEventListener(
+        //   "connectionChange",
+        //   this.handleFirstConnectivityChange
+        // );
 
       }
 
-    Datatest=()=>{ 
-
-      return fetch('https://facebook.github.io/react-native/')
-      .then((response) => response.json())
-      .then((responseJson) => {
-          // if(Math.random() >= 0.5) resolve('BabelCoder!')
-          // else reject(new Error('Less than 0.5!'))
-        return responseJson.movies;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-
-      }
-      
-    
-  
 
 render(){
   var date = new Date().getDate(); //Current Date
@@ -95,10 +87,6 @@ render(){
         <TouchableOpacity  onPress={this.onAddArray}>
           <Text>Add Array</Text>
         </TouchableOpacity>
-
-        <TouchableOpacity onPress={this.Datatest}>
-          <Text>ทดสอบ</Text>
-          </TouchableOpacity>
 
     </View>
     )

@@ -21,8 +21,6 @@ import SendDataScreen from'./src/SendDataScreen';
     )
   }
 }
-
-
 const AppStack = createStackNavigator(
   {
       Home: {
@@ -51,7 +49,7 @@ const AppStack = createStackNavigator(
         }
   },
   {
-    initialRouteName: "Test"
+    initialRouteName: "Home"
   }
 );
 

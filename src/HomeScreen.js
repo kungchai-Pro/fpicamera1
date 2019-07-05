@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
     AppRegistry, StyleSheet, Text, TouchableOpacity,
-    View, Image, Alert, Async, TextInput,
+    View, Image, Alert, Async, TextInput,NetInfo
 } from 'react-native';
 import {
     Container, Header, Left, Body, Right, Button, Icon, Title,
@@ -27,6 +27,22 @@ export default class HomeScreen extends React.Component {
     }
 
     componentDidMount() {
+
+
+        NetInfo.getConnectionInfo().then((connectionInfo) => {
+            // this.setState({isConnected: connectionInfo.type !== 'none'})
+            if(connectionInfo.type == 'none'){
+            //  Alert.alert(connectionInfo.type);
+            Alert.alert('ไม่ได้เชื่อม INTERNET');
+            return;
+            }
+            
+        });
+        let imagetimeLocal =  new Date().toLocaleDateString();
+        let times=new Date().toLocaleTimeString('TH', { hour12: false, 
+            hour: "numeric", 
+            minute: "numeric"});
+            let datetimes=imagetimeLocal+' '+times
         console.disableYellowBox = true;
         var date = new Date().getDate();
         var month = new Date().getMonth() + 1;
@@ -38,7 +54,7 @@ export default class HomeScreen extends React.Component {
 
         setTimeout(() => { 
             this.setState({
-                datanow: datanowdate,
+                datanow: datetimes,
                 isLoadings:false,
             })
                }, 1000)

@@ -1,5 +1,7 @@
 
 import { URL } from './confingURL'
+// import fetch from 'react-native-fetch-polyfill';
+
 export function Savedatafull(data) {
     return UpfilePicture(data)
 }
@@ -23,27 +25,19 @@ function UpfilePicture(dataPath) {
         }
         );
         body.append('Content-Type', 'image/png');
-        fetch(urls, {
+        fetch(urls,{
             method: 'POST', headers: {
                 "Content-Type": "multipart/form-data",
                 "otherHeader": "foo",
             },
             body: body
         })
-            .then((response) => {
+        .then((response) => {
 
-                clearTimeout(timeout);
-                if (response && response.status == 200) {
                     PostDataFuncion(dataPath, datadate);
-                    return response.json();
-                }
-                else reject(new Error('Response error'));
-
-
-                console.log(response);
             })
             .catch((e) => {
-                alert(e)
+                return'Eror'
                 console.log(e)
             })
 
@@ -51,6 +45,12 @@ function UpfilePicture(dataPath) {
 }
 
 function PostDataFuncion(id_im, id_name) {
+    let imagetimeLocal =  new Date().toLocaleDateString();
+    let times=new Date().toLocaleTimeString('TH', { hour12: false, 
+        hour: "numeric", 
+        minute: "numeric"});
+        let datetimes=imagetimeLocal+' '+times
+
     let Url = URL()
     opts = {
         containerNO: id_im.id_contai,
@@ -59,7 +59,7 @@ function PostDataFuncion(id_im, id_name) {
         potoImage: id_name,
         typeinput: id_im.Id_InOut,
         typeImage: id_im.IdType,
-        datetime: "2019-06-17",
+        datetime: datetimes,
         sizeCn: "0"
     }
 
@@ -72,6 +72,8 @@ function PostDataFuncion(id_im, id_name) {
         body: JSON.stringify(opts)
     })
         .then((response) => {
+
+            return response.status;
             console.log(response);
 
         })

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {
     AppRegistry, StyleSheet, Text, TouchableOpacity,
-    View, Image, Alert, AsyncStorage, Modal, ScrollView, WebView, Button
+    View, Image, Alert, AsyncStorage, Modal, ScrollView, WebView, Button,NetInfo
 } from 'react-native';
 import { Savedatafull } from './component/potoSave';
 import {
@@ -39,42 +39,55 @@ export default class SendDataScreen extends React.Component {
 
     }
     senddataTo() {
-
         const { navigate } = this.props.navigation;
         const data_params = this.props.navigation.state.params;
         console.log(data_params.Leftsides[0]);
+
+        NetInfo.getConnectionInfo().then((connectionInfo) => {
+            // this.setState({isConnected: connectionInfo.type !== 'none'})
+            if(connectionInfo.type == 'none'){
+            //  Alert.alert(connectionInfo.type);
+            Alert.alert('ไม่ได้เชื่อม INTERNET');
+            return;
+            }
+            else if(connectionInfo.type =="cellular"){
+                return Alert.alert('PRESS CONNECT WIFI ');
+            }
+            else{
+
+                
         // let frontends = this.state.frontend
         new Promise(function (resolve, reject) {
             setTimeout(function () {
                 Savedatafull(data_params.frontends[0])
                
-            }, 100)
+            }, 500)
         })
         // let backends = this.state.backend;
         new Promise(function (resolve, reject) {
             setTimeout(function () {
                 Savedatafull(data_params.backends[0])
-            }, 100)
+            }, 500)
         })
 
         // let Leftsides = this.state.Leftside;
         new Promise(function (resolve, reject) {
             setTimeout(function () {
                 Savedatafull(data_params.Leftsides[0])
-            }, 100)
+            }, 500)
         })
         // let Rightsides = this.state.Rightside;
         new Promise(function (resolve, reject) {
             setTimeout(function () {
                 Savedatafull(data_params.Rightsides[0])
-            }, 100)
+            }, 500)
         })
         new Promise(function (resolve, reject) {
             setTimeout(function () {
                 AsyncStorage.multiRemove(['Container', 'seal', 'booking','InOut'], (err) => {
                     console.log('Local storage user info removed!');
                 });
-            }, 100)
+            }, 500)
         })
 
   
@@ -87,6 +100,56 @@ export default class SendDataScreen extends React.Component {
                 { text: 'OK', onPress: () => navigate('Home') },
             ]
         )
+
+            }
+        });
+
+
+
+    //     // let frontends = this.state.frontend
+    //     new Promise(function (resolve, reject) {
+    //         setTimeout(function () {
+    //             Savedatafull(data_params.frontends[0])
+               
+    //         }, 500)
+    //     })
+    //     // let backends = this.state.backend;
+    //     new Promise(function (resolve, reject) {
+    //         setTimeout(function () {
+    //             Savedatafull(data_params.backends[0])
+    //         }, 500)
+    //     })
+
+    //     // let Leftsides = this.state.Leftside;
+    //     new Promise(function (resolve, reject) {
+    //         setTimeout(function () {
+    //             Savedatafull(data_params.Leftsides[0])
+    //         }, 500)
+    //     })
+    //     // let Rightsides = this.state.Rightside;
+    //     new Promise(function (resolve, reject) {
+    //         setTimeout(function () {
+    //             Savedatafull(data_params.Rightsides[0])
+    //         }, 500)
+    //     })
+    //     new Promise(function (resolve, reject) {
+    //         setTimeout(function () {
+    //             AsyncStorage.multiRemove(['Container', 'seal', 'booking','InOut'], (err) => {
+    //                 console.log('Local storage user info removed!');
+    //             });
+    //         }, 500)
+    //     })
+
+  
+    // //    alert(timmout);
+    //     // if(timmout==1){
+    //     Alert.alert(
+    //         'บันทึก',
+    //         'ทำการบันทึกแล้ว',
+    //         [
+    //             { text: 'OK', onPress: () => navigate('Home') },
+    //         ]
+    //     )
         // }
         // else{
         //     Alert.alert(
