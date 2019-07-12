@@ -82,30 +82,14 @@ function PostDataFuncion(id_im, id_name) {
         })
 }
 
-
-
-// var FETCH_TIMEOUT = 5000;
-// new Promise(function (resolve, reject) {
-//     var timeout = setTimeout(function () {
-//         reject(new Error('Request timed out'));
-//     }, FETCH_TIMEOUT);
-//     fetch('https://example.com/request&#39')
-//         .then(function (response) {
-//             clearTimeout(timeout);
-//             if (response && response.status == 200) return response.json();
-//             else reject(new Error('Response error'));
-//         })
-//         .then(function (responseObject) {
-//             // process results
-//             resolve();
-//         })
-//         .catch(function (err) {
-//             reject(err);
-//         });
-// })
-//     .then(function () {
-//         // request succeed
-//     })
-//     .catch(function (err) {
-//         // error: response error, request timeout or runtime error
-//     });
+export function Notification(messes){
+    let Url = URL()
+    fetch(Url +'Api-onesignal/'+messes, {
+        method: 'POST', // or 'PUT'// data can be `string` or {object}!
+        headers:{
+          'Content-Type': 'application/json'
+        },
+      })
+      .then(response => console.log('Success:',response))
+      .catch(error => console.log('Error:', error));
+}

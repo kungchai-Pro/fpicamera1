@@ -5,6 +5,10 @@ import {
 } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 import { Savedatafull } from './component/potoSave';
+import {
+    Container, Header, Left, Body, Right, Icon, Title,
+    CardItem, Card, Content, Input, Item, Radio, Thumbnail,Spinner
+} from 'native-base';
 export default class PotocapScreen extends React.Component {
     static navigationOptions = {
         header: null,
@@ -25,7 +29,8 @@ export default class PotocapScreen extends React.Component {
             image1: null,
             image2: null,
             image3: null,
-            image4: null
+            image4: null,
+            loading:true
         }
     }
 
@@ -38,7 +43,8 @@ export default class PotocapScreen extends React.Component {
                     dataContainer: store[0][1],
                     dataSeal: store[1][1],
                     databookin: store[2][1],
-                    InOut:store[3][1]
+                    InOut:store[3][1],
+                    loading:false
                 });
             })
 
@@ -192,6 +198,20 @@ export default class PotocapScreen extends React.Component {
     }
 
     render() {
+
+        if(this.state.loading==true){
+            return(
+                <Container>
+
+                <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+                  <Spinner color='green' />
+                </View>
+      
+              </Container>
+            )
+        }
+        else{
+
         return (
             <View style={{ flex: 1 }}>
                 <Modal
@@ -257,7 +277,7 @@ export default class PotocapScreen extends React.Component {
                         <TouchableOpacity style={{ flex: 1,alignItems:'center'}}
                             onPress={() => this.OncaremaModal(true, 2)}>
                             <Text style={{margin:2}}>ถ่ายด้านหลัง</Text>
-                            <Image source={require('./image/iconfinder_5_940992.png')} style={{ImageResizeMode:'center',width:50,height:50}}/>
+                            <Image source={require('./image/iconfinder_5_940992.png')} style={{width:50,height:50}}/>
                         </TouchableOpacity>
                     </View>
                     <View style={{ flex: 1, backgroundColor: '#f8fdff' }}>
@@ -303,7 +323,7 @@ export default class PotocapScreen extends React.Component {
             </View>
         );
     }
-
+    }
 }
 
 const styles = StyleSheet.create({

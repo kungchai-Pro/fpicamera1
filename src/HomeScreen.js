@@ -29,15 +29,15 @@ export default class HomeScreen extends React.Component {
     componentDidMount() {
 
 
-        NetInfo.getConnectionInfo().then((connectionInfo) => {
-            // this.setState({isConnected: connectionInfo.type !== 'none'})
-            if(connectionInfo.type == 'none'){
-            //  Alert.alert(connectionInfo.type);
-            Alert.alert('ไม่ได้เชื่อม INTERNET');
-            return;
-            }
+        // NetInfo.getConnectionInfo().then((connectionInfo) => {
+        //     // this.setState({isConnected: connectionInfo.type !== 'none'})
+        //     if(connectionInfo.type == 'none'){
+        //     //  Alert.alert(connectionInfo.type);
+        //     Alert.alert('ไม่ได้เชื่อม INTERNET');
+        //     return;
+        //     }
             
-        });
+        // });
         let imagetimeLocal =  new Date().toLocaleDateString();
         let times=new Date().toLocaleTimeString('TH', { hour12: false, 
             hour: "numeric", 

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import {
     AppRegistry, StyleSheet, Text, TouchableOpacity,
-    View, Image, Alert, AsyncStorage, Modal, ScrollView, WebView, Button,NetInfo
+    View, Image, Alert, AsyncStorage, Modal, ScrollView, WebView, Button, NetInfo
 } from 'react-native';
-import { Savedatafull } from './component/potoSave';
+import { Savedatafull, Notification } from './component/potoSave';
 import {
     Container, Header, Left, Body, Right, Icon, Title,
-    CardItem, Card, Content, Input, Item, Radio, Thumbnail
+    CardItem, Card, Content, Input, Item, Radio, Thumbnail,Spinner
 } from 'native-base';
 
 
@@ -15,11 +15,11 @@ export default class SendDataScreen extends React.Component {
         title: 'หน้าบันทึกข้อมูล',
     };
 
-
     constructor(props) {
         super(props)
         this.state = {
-            datanow: null
+            datanow: null,
+            loading:true
         }
     }
 
@@ -34,140 +34,113 @@ export default class SendDataScreen extends React.Component {
 
         var datanowdate = date + '-' + month + '-' + year + ':' + hours + ':' + min;
         this.setState({
-            datanow: datanowdate
+            datanow: datanowdate,
+            loading:false
         })
 
     }
     senddataTo() {
-        const { navigate } = this.props.navigation;
         const data_params = this.props.navigation.state.params;
         console.log(data_params.Leftsides[0]);
 
         NetInfo.getConnectionInfo().then((connectionInfo) => {
             // this.setState({isConnected: connectionInfo.type !== 'none'})
-            if(connectionInfo.type == 'none'){
-            //  Alert.alert(connectionInfo.type);
-            Alert.alert('ไม่ได้เชื่อม INTERNET');
-            return;
+            if (connectionInfo.type == 'none') {
+                //  Alert.alert(connectionInfo.type);
+                Alert.alert('ไม่ได้เชื่อม INTERNET');
+                return;
             }
-            else if(connectionInfo.type =="cellular"){
+            else if (connectionInfo.type == "cellular") {
                 return Alert.alert('PRESS CONNECT WIFI ');
             }
-            else{
+            else {
 
-                
-        // let frontends = this.state.frontend
-        new Promise(function (resolve, reject) {
-            setTimeout(function () {
-                Savedatafull(data_params.frontends[0])
-               
-            }, 500)
-        })
-        // let backends = this.state.backend;
-        new Promise(function (resolve, reject) {
-            setTimeout(function () {
-                Savedatafull(data_params.backends[0])
-            }, 500)
-        })
 
-        // let Leftsides = this.state.Leftside;
-        new Promise(function (resolve, reject) {
-            setTimeout(function () {
-                Savedatafull(data_params.Leftsides[0])
-            }, 500)
-        })
-        // let Rightsides = this.state.Rightside;
-        new Promise(function (resolve, reject) {
-            setTimeout(function () {
-                Savedatafull(data_params.Rightsides[0])
-            }, 500)
-        })
-        new Promise(function (resolve, reject) {
-            setTimeout(function () {
-                AsyncStorage.multiRemove(['Container', 'seal', 'booking','InOut'], (err) => {
-                    console.log('Local storage user info removed!');
-                });
-            }, 500)
-        })
+                // let frontends = this.state.frontend
+                new Promise(function (resolve, reject) {
+                    setTimeout(function () {
+                        Savedatafull(data_params.frontends[0])
 
-  
-    //    alert(timmout);
-        // if(timmout==1){
-        Alert.alert(
-            'บันทึก',
-            'ทำการบันทึกแล้ว',
-            [
-                { text: 'OK', onPress: () => navigate('Home') },
-            ]
-        )
+                    }, 500)
+                })
+                // let backends = this.state.backend;
+                new Promise(function (resolve, reject) {
+                    setTimeout(function () {
+                        Savedatafull(data_params.backends[0])
+                    }, 500)
+                })
+
+                // let Leftsides = this.state.Leftside;
+                new Promise(function (resolve, reject) {
+                    setTimeout(function () {
+                        Savedatafull(data_params.Leftsides[0])
+                    }, 500)
+                })
+                // let Rightsides = this.state.Rightside;
+                new Promise(function (resolve, reject) {
+                    setTimeout(function () {
+                        Savedatafull(data_params.Rightsides[0])
+                    }, 500)
+                })
+
+
+
+                //    alert(timmout);
+                // if(timmout==1){
+                Alert.alert(
+                    'บันทึก',
+                    'ทำการบันทึกแล้ว',
+                    [
+                        { text: 'OK', onPress: () => this.callbackhome(data_params.Rightsides[0]) },
+                    ]
+                )
 
             }
         });
 
-
-
-    //     // let frontends = this.state.frontend
-    //     new Promise(function (resolve, reject) {
-    //         setTimeout(function () {
-    //             Savedatafull(data_params.frontends[0])
-               
-    //         }, 500)
-    //     })
-    //     // let backends = this.state.backend;
-    //     new Promise(function (resolve, reject) {
-    //         setTimeout(function () {
-    //             Savedatafull(data_params.backends[0])
-    //         }, 500)
-    //     })
-
-    //     // let Leftsides = this.state.Leftside;
-    //     new Promise(function (resolve, reject) {
-    //         setTimeout(function () {
-    //             Savedatafull(data_params.Leftsides[0])
-    //         }, 500)
-    //     })
-    //     // let Rightsides = this.state.Rightside;
-    //     new Promise(function (resolve, reject) {
-    //         setTimeout(function () {
-    //             Savedatafull(data_params.Rightsides[0])
-    //         }, 500)
-    //     })
-    //     new Promise(function (resolve, reject) {
-    //         setTimeout(function () {
-    //             AsyncStorage.multiRemove(['Container', 'seal', 'booking','InOut'], (err) => {
-    //                 console.log('Local storage user info removed!');
-    //             });
-    //         }, 500)
-    //     })
-
-  
-    // //    alert(timmout);
-    //     // if(timmout==1){
-    //     Alert.alert(
-    //         'บันทึก',
-    //         'ทำการบันทึกแล้ว',
-    //         [
-    //             { text: 'OK', onPress: () => navigate('Home') },
-    //         ]
-    //     )
-        // }
-        // else{
-        //     Alert.alert(
-        //         'แจ้งเตือน',
-        //         'กรุณาตรวจสอบการเชื่อต่อ',
-        //         [
-        //             { text: 'OK', onPress: () => console.log('connect Netword Error')},
-        //         ]
-        //     )
-
-        // }
     }
 
+    callbackhome(data_id) {
+
+            console.log(data_id);
+
+        new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                AsyncStorage.multiRemove(['Container', 'seal', 'booking', 'InOut'], (err) => {
+                    console.log('Local storage user info removed!');
+                });
+            }, 500)
+        })
+        if(Id_InOut=="In"){
+            var dataOntification = Notification(data_id.id_contai)
+            console.log('api ontification' + dataOntification);
+        }
+        else{
+            console.log('car cotainer out for compapany');
+        }
+
+        const { navigate } = this.props.navigation;
+        navigate('Home')
+    }
 
     render() {
         const { navigate } = this.props.navigation;
         const data_params = this.props.navigation.state.params;
-        console.log(data_params);
+        //console.log(data_params);
+
+        if(this.state.loading==true){
+            return(
+            <Container>
+
+            <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+              <Spinner color='green' />
+            </View>
+  
+          </Container>
+            )
+        }
+        else{
+
         return (
             <View style={{ flex: 1 }}>
                 <View style={{ margin: 5, backgroundColor: '#00897b', borderBottomRightRadius: 15, borderTopLeftRadius: 10 }}>
@@ -187,7 +160,7 @@ export default class SendDataScreen extends React.Component {
                         <Image source={{ uri: data_params.Leftsides[0].uri_Image }} style={{ resizeMode: 'stretch', height: 150, width: null, margin: 1 }} />
                     </View>
                     <View style={{ flex: 1, backgroundColor: '#1e88e5', margin: 1 }}>
-                        <Image source={{ uri: data_params.backends[0].uri_Image }} style={{ resizeMode: 'stretch', height: 150, width: null, margin: 1 }} />
+                        <Image source={{ uri: data_params.Rightsides[0].uri_Image }} style={{ resizeMode: 'stretch', height: 150, width: null, margin: 1 }} />
                     </View>
                 </View>
                 <View style={{ flex: 1, marginTop: 5 }}>
@@ -239,6 +212,7 @@ export default class SendDataScreen extends React.Component {
 
         )
     }
+}
 
 }
 const styles = StyleSheet.create({
