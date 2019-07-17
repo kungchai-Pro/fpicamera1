@@ -5,6 +5,7 @@ import { URL } from './confingURL'
 export function Savedatafull(data) {
     return UpfilePicture(data)
 }
+
 function UpfilePicture(dataPath) {
 
         let Url = URL()
@@ -93,3 +94,58 @@ export function Notification(messes){
       .then(response => console.log('Success:',response))
       .catch(error => console.log('Error:', error));
 }
+
+export function Get_Listcontainer() {
+
+   let Url = URL()
+   var Sdate = new Date().getDate(); //Current Date
+   var EDate = new Date().getDate()+1; 
+   var month = new Date().getMonth() + 1; //Current Month
+   var year = new Date().getFullYear(); //Current Year
+
+    let startdata=year+'-'+month+'-'+Sdate;
+    let EndDate=year+'-'+month+'-'+EDate;
+    // console.log(startdata);
+    // console.log(EndDate);
+       return fetch(Url+'Getcontainer/datalist/?Nocon=&Sdate='+startdata+'&EDate='+EndDate+'&Status=')
+    // return fetch(Url+'Getcontainer/datalist/?Nocon=&Sdate=2019-07-15&EDate=2019-07-17&Status=')
+    .then((response) => response.json())
+    .then((responseJson) => {
+       // console.log(responseJson);
+        return responseJson;
+      })
+    .catch((error) => {
+  //      console.error(error);
+    });
+  }
+
+  export  function listId(Id_con){
+    //  let config_API=URL();
+    let Url = URL()
+      return fetch(Url+'Getcontainer/datalist/?Nocon='+Id_con+'&Sdate=&EDate=&Status=')
+      .then((response) => response.json())
+      .then((responseJson) => {
+         // console.log(responseJson);
+          return responseJson;
+        })
+      .catch((error) => {
+    //      console.error(error);
+      });
+     }
+
+
+     export  function DeleteContainer(Id_con){
+        //  let config_API=URL();
+        let Url = URL()
+          return fetch(Url+'Deletcontainer/Delete/'+Id_con,{
+            method: 'DELETE',
+            headers: {'Content-Type': 'application/json'},
+          })
+          .then((response) =>{
+              console.log(response);
+            return response;
+          })
+          .catch((error) => {
+        //      console.error(error);
+          });
+         }

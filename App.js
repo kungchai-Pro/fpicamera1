@@ -10,6 +10,8 @@ import TestArray from './src/TestArray';
 import Potocapscreen from './src/PotocapScreen';
 import ModalExample from './src/ModalExample';
 import SendDataScreen from'./src/SendDataScreen';
+import EditScreen from'./src/EditScreen';
+import ContainerDetailScreen from './src/ContainerDetailScreen';
 
  class App extends Component {
 
@@ -46,6 +48,12 @@ const AppStack = createStackNavigator(
         },
         SendData: {
           screen: SendDataScreen
+        },
+        Edit: {
+          screen: EditScreen
+        },
+        ContainerDetail: {
+          screen: ContainerDetailScreen
         }
   },
   {

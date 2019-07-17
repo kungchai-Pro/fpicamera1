@@ -70,18 +70,18 @@ export default class SendDataScreen extends React.Component {
                     }, 500)
                 })
 
-                // let Leftsides = this.state.Leftside;
-                new Promise(function (resolve, reject) {
-                    setTimeout(function () {
-                        Savedatafull(data_params.Leftsides[0])
-                    }, 500)
-                })
-                // let Rightsides = this.state.Rightside;
-                new Promise(function (resolve, reject) {
-                    setTimeout(function () {
-                        Savedatafull(data_params.Rightsides[0])
-                    }, 500)
-                })
+                // // let Leftsides = this.state.Leftside;
+                // new Promise(function (resolve, reject) {
+                //     setTimeout(function () {
+                //         Savedatafull(data_params.Leftsides[0])
+                //     }, 500)
+                // })
+                // // let Rightsides = this.state.Rightside;
+                // new Promise(function (resolve, reject) {
+                //     setTimeout(function () {
+                //         Savedatafull(data_params.Rightsides[0])
+                //     }, 500)
+                // })
 
 
 
@@ -91,7 +91,7 @@ export default class SendDataScreen extends React.Component {
                     'บันทึก',
                     'ทำการบันทึกแล้ว',
                     [
-                        { text: 'OK', onPress: () => this.callbackhome(data_params.Rightsides[0]) },
+                        { text: 'OK', onPress: () => this.callbackhome(data_params.frontends[0]) },
                     ]
                 )
 
@@ -111,7 +111,7 @@ export default class SendDataScreen extends React.Component {
                 });
             }, 500)
         })
-        if(Id_InOut=="In"){
+        if(data_id.Id_InOut=="In"){
             var dataOntification = Notification(data_id.id_contai)
             console.log('api ontification' + dataOntification);
         }
@@ -153,14 +153,6 @@ export default class SendDataScreen extends React.Component {
                     </View>
                     <View style={{ flex: 1, backgroundColor: '#1e88e5', margin: 1 }}>
                         <Image source={{ uri: data_params.backends[0].uri_Image }} style={{ resizeMode: 'stretch', height: 150, width: null, margin: 1 }} />
-                    </View>
-                </View>
-                <View style={{ flex: 0, flexDirection: 'row', margin: 1 }}>
-                    <View style={{ flex: 1, backgroundColor: '#f48fb1', margin: 1 }}>
-                        <Image source={{ uri: data_params.Leftsides[0].uri_Image }} style={{ resizeMode: 'stretch', height: 150, width: null, margin: 1 }} />
-                    </View>
-                    <View style={{ flex: 1, backgroundColor: '#1e88e5', margin: 1 }}>
-                        <Image source={{ uri: data_params.Rightsides[0].uri_Image }} style={{ resizeMode: 'stretch', height: 150, width: null, margin: 1 }} />
                     </View>
                 </View>
                 <View style={{ flex: 1, marginTop: 5 }}>

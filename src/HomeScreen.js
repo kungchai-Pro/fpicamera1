@@ -4,10 +4,11 @@ import {
     View, Image, Alert, Async, TextInput,NetInfo
 } from 'react-native';
 import {
-    Container, Header, Left, Body, Right, Button, Icon, Title,
+    Container, Header, Left, Body, Right, Button, Title,
     CardItem, Card, Content, Input, Item, Radio, Form, Picker
 } from 'native-base';
 import AsyncStorage from '@react-native-community/async-storage';
+import Icon from 'react-native-vector-icons/Entypo';
 
 export default class HomeScreen extends React.Component {
     static navigationOptions = {
@@ -25,7 +26,6 @@ export default class HomeScreen extends React.Component {
             isLoadings: true,
         }
     }
-
     componentDidMount() {
 
 
@@ -94,6 +94,7 @@ export default class HomeScreen extends React.Component {
     }
 
     render() {
+      
         if (this.state.isLoadings == true) {
             return (
                 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#ffff' }}>
@@ -106,6 +107,9 @@ export default class HomeScreen extends React.Component {
             );
         }
         else if (this.state.isLoadings == false) {
+            // navigate connection 
+            const { navigate } = this.props.navigation;
+
             return (
                 <Container>
                     <Header style={{ backgroundColor: '#00796b' }}>
@@ -115,6 +119,7 @@ export default class HomeScreen extends React.Component {
                         <Right>
                             <Button transparent>
                                 <Title style={{ color: '#e3f2fd' }}>FPI In</Title>
+                                
                             </Button>
                         </Right>
                     </Header>
@@ -122,6 +127,11 @@ export default class HomeScreen extends React.Component {
                         <Card>
                             <CardItem header style={{ backgroundColor: '#8eacbb' }}>
                                 <Text style={{ fontSize: 14, color: '#ffffff', margin: 1 }}>วันเวลา {this.state.datanow}</Text>
+                                <Right>
+                                    <Button success>
+                                <Icon name='clipboard' style={{fontSize:20,color:'#ffffff',padding:10,margin:5 }} onPress={()=>navigate('Edit')}/>
+                                </Button>
+                                </Right>
                             </CardItem>
                             <CardItem>
                                 <Body>
