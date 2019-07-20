@@ -21,7 +21,7 @@ export default class Cameras extends Component {
       UpfilePicture(PicturePath) {
      //    alert(PicturePath)
         const datadate='testdatalinst.png';
-        var Url = 'http://192.168.10.110:8080/api/uploadFile';
+        var Url = 'http://192.168.10.110:8080/readfile';
         let body = new FormData();
         body.append('file', { uri: PicturePath, name:datadate, 
         filename: 'imageName.png', type: 'image/png'}
@@ -34,56 +34,18 @@ export default class Cameras extends Component {
           }, body: body
         })
           .then((response) =>{
-                this.PostDataFuncion(datadate);
             console.log(response);
           } )
           .catch((e) => {
             console.log(e)
           })
       }
+  
 
-      PostDataFuncion(id_im){
-     //   ChromeSamples.log('Posting request to GitHub API...');
-     opts={
-        containernumber:"WHLU5556479",
-        sealno:"WHLN553244",
-        booking:"0359X30952",
-        imageno:id_im,
-        datetimeactual:"2019-06-17",
-        typetnput:"1",
-        size:"40"
-     }
-        fetch('http://192.168.10.110:8080/api/Postcontainer', {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body:JSON.stringify(opts)
-        })
-        .then(function(response) { 
-                return response.json();
-        })
-        .then(function() {
-                ChromeSamples.log(response.json());
-        })
-        .catch((e) => {
-            console.log(e)
-          })
-
-      }
-    //     <Text onPress={this.UpfilePicture(this.state.Imagedata)}  style={{fontSize:14,color:'red'}}>บันทึก</Text>
     render() {
 
         return (
             <View style={styles.container}>
-                {/* <Text style={{ fontSize: 18, color: 'red' }}>{this.state.Imagedata} {pramar.dataType}</Text> */}
-
-                {/* <Button
-          onPress={() =>this.UpfilePicture(this.state.Imagedata)}
-          title="Press Me"
-        /> */}
-                {/* <Image source={{ uri: this.state.Imagedata }} style={{ height: 200, width: null, flex: 1 }} /> */}
                 <RNCamera
                     ref={ref => {
                         this.camera = ref;
@@ -130,17 +92,15 @@ export default class Cameras extends Component {
             };
             
             const data = await this.camera.takePictureAsync(options);
-            console.log(data.uri);
-            this.UpfilePicture(data.uri)
-        //     this.setState({
-        //         Imagedata: data.uri
-        //     }, function () {
-        //    //     this.UpfilePicture(data.uri)
-        //         // this.props.navigation.navigate('Poto')
+            console.log(data);
+          //  this.UpfilePicture(data.uri)
+          if(data.height > 4000 || data.width >3000){
+            alert(data.height+''+data.width);
+          }
+          else{
+              alert("ok");
+          }
 
-        //         // navigate('Poto', { ImagePoto: this.state.Imagedata, typeimage: data_params.dataType })
-        //         //alert(''+this.state.Imagedata);
-        //     })
         }
 
     }

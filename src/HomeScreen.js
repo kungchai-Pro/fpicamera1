@@ -100,8 +100,7 @@ export default class HomeScreen extends React.Component {
                 <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#ffff' }}>
                     {/* <Spinner color='blue' /> */}
                     <View style={{ width: 200, height: 200, borderRadius: 10, backgroundColor: '#ffff', alignItems: 'center', justifyContent: 'center' }}>
-                    <Image source={require('./image/iconfinder_5_940992.png')} style={{resizeMode:'contain',width:50,height:50}}/>
-                        <Text style={{ margin: 5, color: '#1faa00' }}>Load  . . . </Text>
+                    <Image source={require('./image/delivery-truck.png')} style={{resizeMode:'contain',width:50,height:50}}/>
                     </View>
                 </View>
             );

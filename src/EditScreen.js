@@ -3,6 +3,7 @@ import {
     AppRegistry, StyleSheet, Text, TouchableOpacity,
     View, Image, Alert, Async, TextInput, NetInfo,FlatList,RefreshControl,ActivityIndicator
 } from 'react-native';
+import Loading from'./Loader';
 
 import {
     Container, Header, Left, Body, Right, Button, Title,
@@ -27,6 +28,7 @@ class EditScreen extends Component {
             fetching_from_server:false,
             timePassed:null,
             isLoadings:true,
+            loading:false
         }
     }
 
@@ -58,12 +60,24 @@ class EditScreen extends Component {
     }
 
     DeletData=(IDdata)=>{
+      this.setState({
+        loading:true
+      })
 
-       
       DeleteContainer(IDdata).then((dataresult)=>{
     console.log(dataresult);
       })
-      this._onRefresh();
+
+      setTimeout(() => { 
+        this.setState({
+          loading:false,
+        });
+
+        this._onRefresh();
+
+        }, 1500)
+
+   
     }
 
 
@@ -95,7 +109,7 @@ class EditScreen extends Component {
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#ffff' }}>
                 {/* <Spinner color='blue' /> */}
                 <View style={{ width: 200, height: 200, borderRadius: 10, backgroundColor: '#ffff', alignItems: 'center', justifyContent: 'center' }}>
-                <Image source={require('./image/iconfinder_5_940992.png')} style={{resizeMode:'contain',width:50,height:50}}/>
+                <Image source={require('./image/delivery-truck.png')} style={{resizeMode:'contain',width:50,height:50}}/>
                     <Text style={{ margin: 5, color: '#1faa00' }}>Load  . . . </Text>
                 </View>
             </View>
@@ -105,6 +119,10 @@ class EditScreen extends Component {
         return (
             <Container>
             <Content> 
+
+            <Loading
+            loading={this.state.loading}
+            />
               <FlatList
                 data={this.state.datalis}
                 renderItem={({ item }) =>

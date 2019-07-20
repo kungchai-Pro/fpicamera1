@@ -118,9 +118,10 @@ export default class SendDataScreen extends React.Component {
         else{
             console.log('car cotainer out for compapany');
         }
-
+        setTimeout(function () {
         const { navigate } = this.props.navigation;
         navigate('Home')
+        },500);
     }
 
     render() {
