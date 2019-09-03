@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 import { AppRegistry, StyleSheet, Text, TouchableOpacity, View, Image, Alert } from 'react-native';
 import { RNCamera } from 'react-native-camera';
 
-//import { thisExpression } from '@babel/types';
-
 export default class Cameras extends Component {
     static navigationOptions = {
         header: null,
@@ -17,9 +15,7 @@ export default class Cameras extends Component {
         }
     }
 
-
       UpfilePicture(PicturePath) {
-     //    alert(PicturePath)
         const datadate='testdatalinst.png';
         var Url = 'http://192.168.10.110:8080/readfile';
         let body = new FormData();
@@ -43,7 +39,6 @@ export default class Cameras extends Component {
   
 
     render() {
-
         return (
             <View style={styles.container}>
                 <RNCamera
@@ -80,7 +75,6 @@ export default class Cameras extends Component {
         );
     }
 
-
     takePicture = async function () {
         const { navigate } = this.props.navigation;
         const data_params = this.props.navigation.state.params;
@@ -93,7 +87,6 @@ export default class Cameras extends Component {
             
             const data = await this.camera.takePictureAsync(options);
             console.log(data);
-          //  this.UpfilePicture(data.uri)
           if(data.height > 4000 || data.width >3000){
             alert(data.height+''+data.width);
           }
@@ -105,6 +98,7 @@ export default class Cameras extends Component {
 
     }
 }
+
 
 const styles = StyleSheet.create({
     container: {

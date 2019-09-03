@@ -6,9 +6,8 @@ import {
 import { Savedatafull, Notification } from './component/potoSave';
 import {
     Container, Header, Left, Body, Right, Icon, Title,
-    CardItem, Card, Content, Input, Item, Radio, Thumbnail,Spinner
+    CardItem, Card, Content, Input, Item, Radio, Thumbnail, Spinner
 } from 'native-base';
-
 
 export default class SendDataScreen extends React.Component {
     static navigationOptions = {
@@ -19,7 +18,7 @@ export default class SendDataScreen extends React.Component {
         super(props)
         this.state = {
             datanow: null,
-            loading:true
+            loading: true
         }
     }
 
@@ -35,7 +34,7 @@ export default class SendDataScreen extends React.Component {
         var datanowdate = date + '-' + month + '-' + year + ':' + hours + ':' + min;
         this.setState({
             datanow: datanowdate,
-            loading:false
+            loading: false
         })
 
     }
@@ -44,9 +43,8 @@ export default class SendDataScreen extends React.Component {
         console.log(data_params.Leftsides[0]);
 
         NetInfo.getConnectionInfo().then((connectionInfo) => {
-            // this.setState({isConnected: connectionInfo.type !== 'none'})
             if (connectionInfo.type == 'none') {
-                //  Alert.alert(connectionInfo.type);
+
                 Alert.alert('ไม่ได้เชื่อม INTERNET');
                 return;
             }
@@ -55,38 +53,18 @@ export default class SendDataScreen extends React.Component {
             }
             else {
 
-
-                // let frontends = this.state.frontend
                 new Promise(function (resolve, reject) {
                     setTimeout(function () {
                         Savedatafull(data_params.frontends[0])
 
                     }, 500)
                 })
-                // let backends = this.state.backend;
-                new Promise(function (resolve, reject) {
-                    setTimeout(function () {
-                        Savedatafull(data_params.backends[0])
-                    }, 500)
-                })
-
-                // // let Leftsides = this.state.Leftside;
                 // new Promise(function (resolve, reject) {
                 //     setTimeout(function () {
-                //         Savedatafull(data_params.Leftsides[0])
-                //     }, 500)
-                // })
-                // // let Rightsides = this.state.Rightside;
-                // new Promise(function (resolve, reject) {
-                //     setTimeout(function () {
-                //         Savedatafull(data_params.Rightsides[0])
+                //         Savedatafull(data_params.backends[0])
                 //     }, 500)
                 // })
 
-
-
-                //    alert(timmout);
-                // if(timmout==1){
                 Alert.alert(
                     'บันทึก',
                     'ทำการบันทึกแล้ว',
@@ -102,7 +80,7 @@ export default class SendDataScreen extends React.Component {
 
     callbackhome(data_id) {
 
-            console.log(data_id);
+        console.log(data_id);
 
         new Promise(function (resolve, reject) {
             setTimeout(function () {
@@ -111,101 +89,93 @@ export default class SendDataScreen extends React.Component {
                 });
             }, 500)
         })
-        if(data_id.Id_InOut=="In"){
+        if (data_id.Id_InOut == "In") {
             var dataOntification = Notification(data_id.id_contai)
             console.log('api ontification' + dataOntification);
+            const { navigate } = this.props.navigation;
+            navigate('Edit')
         }
-        else{
+        else {
             console.log('car cotainer out for compapany');
         }
-        setTimeout(function () {
-        const { navigate } = this.props.navigation;
-        navigate('Home')
-        },500);
+
     }
 
     render() {
-        const { navigate } = this.props.navigation;
         const data_params = this.props.navigation.state.params;
-        //console.log(data_params);
 
-        if(this.state.loading==true){
-            return(
-            <Container>
+        if (this.state.loading == true) {
+            return (
+                <Container>
 
-            <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
-              <Spinner color='green' />
-            </View>
-  
-          </Container>
+                    <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
+                        <Spinner color='green' />
+                    </View>
+
+                </Container>
             )
         }
-        else{
-
-        return (
-            <View style={{ flex: 1 }}>
-                <View style={{ margin: 5, backgroundColor: '#00897b', borderBottomRightRadius: 15, borderTopLeftRadius: 10 }}>
-                    <Text style={{ fontSize: 16, color: '#e0f2f1', padding: 10 }}>แสดงข้อมูล เข้า/ ออก </Text>
-                </View>
-
-                <View style={{ flex: 0, flexDirection: 'row', margin: 1 }}>
-                    <View style={{ flex: 1, backgroundColor: '#f48fb1', margin: 1 }}>
-                        <Image source={{ uri: data_params.frontends[0].uri_Image }} style={{ resizeMode: 'stretch', height: 150, width: null, margin: 1 }} />
-                    </View>
-                    <View style={{ flex: 1, backgroundColor: '#1e88e5', margin: 1 }}>
-                        <Image source={{ uri: data_params.backends[0].uri_Image }} style={{ resizeMode: 'stretch', height: 150, width: null, margin: 1 }} />
-                    </View>
-                </View>
-                <View style={{ flex: 1, marginTop: 5 }}>
-
-                    <View style={{ flex: 1, margin: 1, backgroundColor: '#e8eaf6', borderRadius: 10, padding: 2 }}>
-
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text style={{ marginRight: 10, fontSize: 15, color: '#455a64' }}> Container </Text>
-                            <Text style={{ marginRight: 15, color: '#1985c1' }}>{data_params.frontends[0].id_contai}</Text>
-                        </View>
-
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text style={{ marginRight: 10, fontSize: 15, color: '#455a64' }}> Seal </Text>
-                            <Text style={{ marginRight: 15, color: '#1985c1' }}>{data_params.frontends[0].id_seal}</Text>
-                        </View>
-
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text style={{ marginRight: 10, fontSize: 15, color: '#455a64' }}> Booking </Text>
-                            <Text style={{ marginRight: 15, color: '#1985c1' }}>{data_params.frontends[0].id_booking}</Text>
-                        </View>
-
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text style={{ marginRight: 10, fontSize: 15, color: '#455a64' }}> Status </Text>
-                            <Text style={{ marginRight: 15, color: '#1985c1' }}>{data_params.frontends[0].Id_InOut}</Text>
-
-                        </View>
-
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-                            <Text style={{ marginRight: 10, fontSize: 15, color: '#455a64' }}> Date/time </Text>
-                            <Text style={{ marginRight: 15, color: '#1985c1' }}>{this.state.datanow}</Text>
-                        </View>
-
+        else {
+            return (
+                <View style={{ flex: 1 }}>
+                    <View style={{ margin: 5, backgroundColor: '#00897b', borderBottomRightRadius: 15, borderTopLeftRadius: 10 }}>
+                        <Text style={{ fontSize: 16, color: '#e0f2f1', padding: 10 }}>แสดงข้อมูล เข้า/ ออก </Text>
                     </View>
 
-                    {/* <View style={{ flex: 1, margin: 1, alignItems: 'center', justifyContent: 'center' }}> */}
-                    <TouchableOpacity onPress={() => this.senddataTo()} style={{
-                        flex: 0, backgroundColor: '#4db6ac', padding: 5, margin: 5,
-                        borderRadius: 10, alignItems: 'center', justifyContent: 'center'
-                    }}>
-                        <Text style={{ color: '#ffffff', fontSize: 16, margin: 5, padding: 5 }}>
-                            บันทึก
+                    <View style={{ flex: 0, flexDirection: 'row', margin: 1 }}>
+                        <View style={{ flex: 1, backgroundColor: '#f48fb1', margin: 1 }}>
+                            <Image source={{ uri: data_params.frontends[0].uri_Image }} style={{ resizeMode: 'stretch', height: 150, width: null, margin: 1 }} />
+                        </View>
+                        {/* <View style={{ flex: 1, backgroundColor: '#1e88e5', margin: 1 }}>
+                            <Image source={{ uri: data_params.backends[0].uri_Image }} style={{ resizeMode: 'stretch', height: 150, width: null, margin: 1 }} />
+                        </View> */}
+                    </View>
+                    <View style={{ flex: 1, marginTop: 5 }}>
+
+                        <View style={{ flex: 1, margin: 1, backgroundColor: '#e8eaf6', borderRadius: 10, padding: 2 }}>
+
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <Text style={{ marginRight: 10, fontSize: 15, color: '#455a64' }}> Container </Text>
+                                <Text style={{ marginRight: 15, color: '#1985c1' }}>{data_params.frontends[0].id_contai}</Text>
+                            </View>
+
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <Text style={{ marginRight: 10, fontSize: 15, color: '#455a64' }}> Seal </Text>
+                                <Text style={{ marginRight: 15, color: '#1985c1' }}>{data_params.frontends[0].id_seal}</Text>
+                            </View>
+
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <Text style={{ marginRight: 10, fontSize: 15, color: '#455a64' }}> Booking </Text>
+                                <Text style={{ marginRight: 15, color: '#1985c1' }}>{data_params.frontends[0].id_booking}</Text>
+                            </View>
+
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <Text style={{ marginRight: 10, fontSize: 15, color: '#455a64' }}> Status </Text>
+                                <Text style={{ marginRight: 15, color: '#1985c1' }}>{data_params.frontends[0].Id_InOut}</Text>
+
+                            </View>
+
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+                                <Text style={{ marginRight: 10, fontSize: 15, color: '#455a64' }}> Date/time </Text>
+                                <Text style={{ marginRight: 15, color: '#1985c1' }}>{this.state.datanow}</Text>
+                            </View>
+
+                        </View>
+
+                        <TouchableOpacity onPress={() => this.senddataTo()} style={{
+                            flex: 0, backgroundColor: '#4db6ac', padding: 5, margin: 5,
+                            borderRadius: 10, alignItems: 'center', justifyContent: 'center'
+                        }}>
+                            <Text style={{ color: '#ffffff', fontSize: 16, margin: 5, padding: 5 }}>
+                                บันทึก
                             </Text>
-                    </TouchableOpacity>
-                    {/* </View> */}
+                        </TouchableOpacity>
+
+                    </View>
                 </View>
-            </View>
-
-
-
-        )
+            )
+        }
     }
-}
 
 }
 const styles = StyleSheet.create({

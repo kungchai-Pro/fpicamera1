@@ -12,6 +12,7 @@ import ModalExample from './src/ModalExample';
 import SendDataScreen from'./src/SendDataScreen';
 import EditScreen from'./src/EditScreen';
 import ContainerDetailScreen from './src/ContainerDetailScreen';
+import Screenlode from './src/component/screenload';
 
  class App extends Component {
 
@@ -31,9 +32,9 @@ const AppStack = createStackNavigator(
         Cameras: {
           screen: CamerasScreen
         },
-        // Poto: {
-        //   screen: potoSave
-        // },
+        Screenlode: {
+          screen: Screenlode
+        },
         LoadingPt: {
           screen: Loadingpoto
         },
