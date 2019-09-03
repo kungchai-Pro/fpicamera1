@@ -58,23 +58,29 @@ export default class PotocapScreen extends React.Component {
         }
         else {
 
-            let datalist = new Savedatafull(this.state.frontend[0])
-            if (datalist.__proto__.constructor.name == 'Savedatafull') {
-                // console.log(datalist.__proto__.constructor.name);
-                this.callbackhome(this.state.frontend)
-                // AsyncStorage.multiRemove(['Container', 'seal', 'booking', 'InOut'], (err) => {
-                //     console.log('Local storage user info removed!');
-                // });
-            }
-            else {
-                alert('ไม่สามารถทำการบันทึกได้');
-            }
+         Savedatafull(this.state.frontend[0]).then(data=>{
+             if(data=='Savsuccessfully!'){
+                this.callbackhome(this.state.frontend);
+             }
+         })
+         
+      //   console.log(datalise+'1111')
+            // if (datalist.__proto__.constructor.name == 'Savedatafull') {
+            //     // console.log(datalist.__proto__.constructor.name);
+            //     this.callbackhome(this.state.frontend)
+            //     // AsyncStorage.multiRemove(['Container', 'seal', 'booking', 'InOut'], (err) => {
+            //     //     console.log('Local storage user info removed!');
+            //     // });
+            // }
+            // else {
+            //     alert('ไม่สามารถทำการบันทึกได้');
+            // }
         }
     }
 
     callbackhome(data_id) {
         console.log(data_id);
-        const { navigate } = this.props.navigation;
+       
         var date = new Date().getDate();
         var month = new Date().getMonth() + 1;
         var year = new Date().getFullYear();
@@ -93,17 +99,22 @@ export default class PotocapScreen extends React.Component {
                 'บันทึก',
                 'ทำการบันทึกแล้ว',
                 [
-                    { text: 'OK', onPress: () =>navigate('Edit') },
+                    { text: 'OK', onPress: ()=>this.ConnextView()},
                 ]
             )  
             
         }
         else {
-            
+            const { navigate } = this.props.navigation;
             navigate('Home')
             console.log('car cotainer out for compapany');
         }
 
+    }
+
+    ConnextView(){
+        const { navigate } = this.props.navigation;
+        navigate('Edit')
     }
 
     // control modal  propUp  on/off
@@ -119,8 +130,8 @@ export default class PotocapScreen extends React.Component {
     }
 
     takePicture = async function () {
-        const { navigate } = this.props.navigation;
-        const data_params = this.props.navigation.state.params;
+        // const { navigate } = this.props.navigation;
+        // const data_params = this.props.navigation.state.params;
         if (this.camera) {
             const options = {
                 quality: 0.5,

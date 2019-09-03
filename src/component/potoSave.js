@@ -24,7 +24,7 @@ function UpfilePicture(dataPath) {
   }
   );
   body.append('Content-Type', 'image/png');
-  fetch(urls, {
+   return fetch(urls, {
     method: 'POST', headers: {
       "Content-Type": "multipart/form-data",
       "otherHeader": "foo",
@@ -32,7 +32,7 @@ function UpfilePicture(dataPath) {
     body: body
   })
     .then((response) => {
-
+ //  PostDataFuncion(dataPath, datadate)
       //  let responsPostdata = PostDataFuncion(dataPath, datadate);
       return PostDataFuncion(dataPath, datadate);
     })
@@ -73,12 +73,7 @@ function PostDataFuncion(id_im, id_name) {
     },
     body: JSON.stringify(opts)
   })
-    .then((response) => {
-
-      return response.status;
-      console.log(response);
-
-    })
+    .then((response) =>response.text())
     .catch((e) => {
       console.log(e)
     })

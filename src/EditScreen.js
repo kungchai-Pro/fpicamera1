@@ -1,25 +1,16 @@
 import React, { Component } from 'react';
-import {
-  AppRegistry, StyleSheet, Text, TouchableOpacity,
-  View, Image, Alert, Async, TextInput, NetInfo, FlatList, ActivityIndicator
+import {StyleSheet, Text,
+  View, Image, Alert, FlatList, 
 } from 'react-native';
-import Loading from './Loader';
-
 import {
   Container, Header, Left, Body, Right, Button, Title,
-  CardItem, Card, Content, Input, Item, Radio, Form, List, ListItem, Thumbnail
+ Content, List, ListItem, Thumbnail
 } from 'native-base';
-import AsyncStorage from '@react-native-community/async-storage';
-import Icon from 'react-native-vector-icons/Entypo';
+
 import { Get_Listcontainer, DeleteContainer } from './component/potoSave';
 import { Urlimage } from './component/confingURL';
 
 export default class EditScreen extends Component {
-
-//   static navigationOptions = {
-//     header: null,
-// };
-
   constructor(props) {
     super(props);
     this.state = {
@@ -28,15 +19,15 @@ export default class EditScreen extends Component {
       fetching_from_server: false,
       timePassed: null,
       isLoadings: true,
-      loading: false
+      loading: false,
+      reloaddataList:false
     }
   }
-
-   componentDidMount() {
+  componentDidMount() {
     console.disableYellowBox = true;
     var dataurl = Urlimage();
 
-     Get_Listcontainer().then((data) => {
+    Get_Listcontainer().then((data) => {
       console.log(data);
       this.setState({
         datalis: data,
@@ -46,7 +37,6 @@ export default class EditScreen extends Component {
     })
   }
 
-
   ListView = (idcons) => {
 
     const { navigate } = this.props.navigation;
@@ -55,72 +45,38 @@ export default class EditScreen extends Component {
   }
 
   DeletData = (IDdata) => {
-    // this.setState({
-    //   loading: true
-    // })
-
     Alert.alert(
       'ลบข้อมูล',
       'คุณต้องการลบข้อมูล ใช้ หรือ ไม่ ',
       [
         {
           text: 'OK',
-          onPress: () => {DeleteContainer(IDdata).then((dataresult) => {this.componentDidMount()})},
+          onPress: () => { DeleteContainer(IDdata).then((dataresult) => { this.componentDidMount() }) },
           style: 'Ok',
         },
-        {text: 'Cancel', onPress: () => console.log('OK Pressed')},
+        { text: 'Cancel', onPress: () => console.log('OK Pressed') },
       ],
-      {cancelable: false},
+      { cancelable: false },
     );
-
-
-    // DeleteContainer(IDdata).then((dataresult) => {
-    //   console.log(dataresult);
-    // })
-
-    // setTimeout(() => {
-    //   this.setState({
-    //     loading: false,
-    //   });
-
-    //   this._onRefresh();
-
-    // }, 1500)
-
-
   }
+  Reloaddata() {
+    this.setState({
+      reloaddataList: true
+    })
 
-
-  // _onRefresh() {
-
-  //   this.setState({refreshing: true});
-
-  //   var dataurl = Urlimage();
-
-  //   Get_Listcontainer().then((data) => {
-  //     console.log(data);
-  //     this.setState({
-  //       datalis: data,
-  //       Urlimages: dataurl,
-  //       refreshing:false,
-  //       fetching_from_server:false
-  //     })
-  //   })
-
-  //   // fetchData().then(() => {
-  //   //   this.setState({refreshing: false});
-  //   // });
-  // }
-        resetdata(){
-            alert('test')
-        }
-
+    setTimeout(() => {
+      this.setState({
+        reloaddataList: false
+      }, function () {
+        this.componentDidMount();
+      })
+    }, 1500);
+  }
   render() {
     const { navigate } = this.props.navigation;
     if (this.state.isLoadings == true) {
       return (
         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: '#ffff' }}>
-          {/* <Spinner color='blue' /> */}
           <View style={{ width: 200, height: 200, borderRadius: 10, backgroundColor: '#ffff', alignItems: 'center', justifyContent: 'center' }}>
             <Image source={require('./image/delivery-truck.png')} style={{ resizeMode: 'contain', width: 50, height: 50 }} />
             <Text style={{ margin: 5, color: '#1faa00' }}>Load  . . . </Text>
@@ -133,20 +89,21 @@ export default class EditScreen extends Component {
         <Container>
           <Header style={{ backgroundColor: '#00796b' }}>
             <Button transparent onPress={() => navigate('Home')}>
-                <Title style={{ color: '#e3f2fd' }}>หน้าหลัก</Title>
-              </Button>
+              <Title style={{ color: '#e3f2fd' }}>หน้าหลัก</Title>
+            </Button>
             <Right>
-            <Body>
-              <Title style={{ color: '#e3f2fd' }} onPress={()=>this.componentDidMount()}>Reload. </Title>
-            </Body>
+              <Body>
+                <Title style={{ color: '#e3f2fd' }} onPress={() => this.Reloaddata()}>Reload. </Title>
+              </Body>
             </Right>
           </Header>
+          <View style={{alignItems:'center',backgroundColor:'#bbdefb'}}>
+          { this.state.reloaddataList==true ? <Text style={{margin:5,color:'#FF6E33'}}>Loading  . . . . </Text>:<Text></Text>}
+          </View>
           <Content>
-
             <FlatList
               data={this.state.datalis}
               renderItem={({ item }) =>
-
                 <List key={item.id_No} >
                   <ListItem thumbnail style={item.containerNO == null || item.containerNO == '' ? { backgroundColor: '#ffd180' } : ''}>
                     <Left>
@@ -158,20 +115,17 @@ export default class EditScreen extends Component {
                       <Text style={styles.fontzin12}>Status {item.typeinput}</Text>
                     </Body>
                     <Right>
-
                       <Button transparent onPress={() => this.ListView(item.id_No)}>
                         <Text style={{ color: '#0091ea', fontSize: 14 }}>
                           ดูข้อมูล
                             </Text>
                       </Button>
-
                       <Button
                         transparent onPress={() => this.DeletData(item.id_No)}>
-                        <Text style={{ color: '#ff6d00', fontSize:14}}>
+                        <Text style={{ color: '#ff6d00', fontSize: 14 }}>
                           ลบข้อมูล
                             </Text>
                       </Button>
-
                     </Right>
                   </ListItem>
                 </List>}
@@ -184,8 +138,6 @@ export default class EditScreen extends Component {
   }
 
 }
-
-
 const styles = StyleSheet.create({
   fontzin12: {
     fontSize: 12,
@@ -209,9 +161,5 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#757575'
   }
-  //    backgroundColor: 'black',
-
 });
 
-
-//export default EditScreen;
